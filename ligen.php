@@ -10,14 +10,14 @@
 		
 		<script src="./jquery/navigation.js"></script>
 		<script type="text/javascript">
-			window.onload = function() {hilightNavItem ('navToSportverbaende');};
+			window.onload = function() {hilightNavItem ('navToLigen');};
 		</script>
 	</head>
  
 	<body>
 		<div class="grid-container">
   			<div class="header">
-    			<h1>Sportverbände</h1>
+    			<h1>Ligen</h1>
   			</div>
   
   			<div class="navigation" style="background-color:#aaa;">
@@ -25,16 +25,7 @@
 			</div>
 
   			<div class="content" style="background-color:#bbb;">
-				<h2>Sportverbände<h2>
-
-				<?php
-					$pdo = new PDO('mysql:host=localhost;dbname=sportverbaende', 'root');
-					$sql = "SELECT Name FROM sportverbaende";
-					foreach ($pdo->query($sql) as $row) {
-   						echo $row['Name']."<br />";
-					}
-				?>
-
+			  <h2>Ligen<h2>
 			</div>  
 	  		<div class="footer">
 				<p>Aktuelles Datum: <?php echo date("d.m.Y H:i:s");?></p>

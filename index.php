@@ -10,7 +10,7 @@
 		
 		<script src="./jquery/navigation.js"></script>
 		<script type="text/javascript">
-			window.onload = function() {hilightNavItem ('navToSportverbaende');};
+			window.onload = function() {hilightNavItem ('navToWilkommen');};
 		</script>
 	</head>
  
@@ -25,16 +25,8 @@
 			</div>
 
   			<div class="content" style="background-color:#bbb;">
-				<h2>Sportverbände<h2>
-
-				<?php
-					$pdo = new PDO('mysql:host=localhost;dbname=sportverbaende', 'root');
-					$sql = "SELECT Name FROM sportverbaende";
-					foreach ($pdo->query($sql) as $row) {
-   						echo $row['Name']."<br />";
-					}
-				?>
-
+			  <h2>Herzlich Willkommen bei den Top-20-Sportverbänden<h2>
+				<img src="./images/welcome.png" width="80%" align="center">
 			</div>  
 	  		<div class="footer">
 				<p>Aktuelles Datum: <?php echo date("d.m.Y H:i:s");?></p>
