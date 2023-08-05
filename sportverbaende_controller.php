@@ -11,6 +11,20 @@
         return array ("ShortCut" => $shortCut, "Name" => $name, "NumberOfMembers" => $numberOfMembers);
     }
 
+    function createRecord ($shortCut, $name, $numberOfMembers) {
+        //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
+        //include('./include/content.inc.php');
+        $dbContext          =   new mysqli ("localhost", "root", null, "sportverbaende");
+        $sqlCommand         =   "INSERT INTO sportverbaende (ShortCut, Name, NumberOfMembers) VALUES ('".$shortCut."', '".$name."', '".$numberOfMembers."')";
+        echo $sqlCommand;
+
+        if ($dbContext->query($sqlCommand) === TRUE) {
+            return ($dbContext->insert_id);
+        } else {
+            return -1;
+        }
+    }
+
     function saveRecord ($id, $shortCut, $name, $numberOfMembers) {
         include('./include/content.inc.php');
         $sqlCommand         =   $dbContext->prepare("UPDATE sportverbaende SET ShortCut = :shortCut, Name = :name, NumberOfMembers = :numberOfMembers WHERE ID = :id");
@@ -23,12 +37,22 @@
         $sqlCommand->execute(array('id' => $id));
     }
 
+    if (isset ($_POST['command']) AND $_POST['command'] == "create") {
+        $newID = createRecord ($_POST['ShortCut'] , $_POST['Name'] , $_POST['NumberOfMembers']);
+        header("Location: ./sportverbaende_controller.php?ID=".$newID);
+        exit();
+    }
+
+    if (isset ($_POST['command']) AND $_POST['command'] == "discardCreate") {
+        header("Location: ./sportverbaende_create.php");
+        exit();
+    }
+    
     if (isset($_GET['ID'])) {
         $id                 =   $_GET['ID'];
 
         if (isset ($_POST['command']) AND $_POST['command'] == "save") {
             saveRecord ($id , $_POST['ShortCut'] , $_POST['Name'] , $_POST['NumberOfMembers']);
-            
         } else if (isset ($_POST['command']) AND $_POST['command'] == "delete") {
             deleteRecord ($id);
             header("Location: ./sportverbaende_index.php");
@@ -40,7 +64,7 @@
             $shortCut           =   $record['ShortCut'];
             $name               =   $record['Name'];
             $numberOfMembers    =   $record['NumberOfMembers'];
-            include('./sportverbaende_editForm.php');
+            include('./sportverbaende_edit.php');
         } else {
             echo "M I S S I N G   R E C O R D";
         }

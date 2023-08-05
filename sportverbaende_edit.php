@@ -57,18 +57,18 @@
                         </div>
 
                         <div class="card-footer">
-                            <button type="submit" name="command" value="save" class="btn btn-primary">
-                                <img class="listIcon" src="./icon/Save.png">&nbsp;&nbsp;Speichern
+                            <button type="submit" name="command" value="save" class="btn btn-success">
+                                <img class="listIcon" src="./icon/Save.png">&nbsp;|&nbsp;Speichern
                             </button>
-                            <button type="submit" name="command" value="discard" class="btn btn-secondary">
-                                <img class="listIcon" src="./icon/Refresh.png">&nbsp;&nbsp;Verwerfen
+                            <button type="submit" name="command" value="discardEdit" class="btn btn-secondary">
+                                <img class="listIcon" src="./icon/Refresh.png">&nbsp;|&nbsp;Verwerfen
                             </button>
-                            <button type="submit" name="command" value="delete" class="btn btn-secondary">
-                                <img class="listIcon" src="./icon/Delete.png">&nbsp;&nbsp;Löschen
+                            <button type="submit" name="command" value="delete" class="btn btn-danger">
+                                <img class="listIcon" src="./icon/Delete.png">&nbsp;|&nbsp;Löschen
                             </button>
                         </div>
                     </div>
-                    </form>
+                </form>
 			</div>  
 	  		<div class="footer">
 				<p>Aktuelles Datum: <?php echo date("d.m.Y H:i:s");?></p>

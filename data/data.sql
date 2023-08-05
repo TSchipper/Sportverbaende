@@ -1,6 +1,9 @@
 CREATE DATABASE		IF NOT EXISTS
 					Sportverbaende;
-                    
+
+DROP TABLE			IF EXISTS
+					Sportverbaende;
+
 CREATE TABLE		IF NOT EXISTS
 					Sportverbaende (
                     	ID					INT					NOT NULL	AUTO_INCREMENT
