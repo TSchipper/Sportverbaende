@@ -34,6 +34,7 @@ body {
 /* Style the left column */
 .navigation {
   grid-area: navigation;
+  background-color: #f1f1f1;
 }
 
 /* Style the middle column */
@@ -46,8 +47,19 @@ body {
   grid-area: footer;
   background-color: #f1f1f1;
   padding: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .navItemSelected {font-weight: bold;}
 .navItemUnselected {font-weight: normal;}
+
+.listIcon {
+  width:1em;
+  height:1em;
+}
+
+.tableCell_Icon {width:4em; text-align:right;}
+.tableCell_Text {text-align:left;}
+.tableCell_Number {text-align:right;}
+
+.objectName {font-weight: bold; font-style: italic;}

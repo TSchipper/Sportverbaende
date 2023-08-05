@@ -6,7 +6,7 @@ CREATE TABLE		IF NOT EXISTS
                     	ID					INT					NOT NULL	AUTO_INCREMENT
                         , ShortCut			VARCHAR (50)		NOT NULL
                         , Name				VARCHAR (255)		NOT NULL
-                        , NumberOfMembers	VARCHAR (255)		NULL
+                        , NumberOfMembers	INT					NULL
                        , PRIMARY KEY (ID)
                     );
 
