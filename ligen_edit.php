@@ -1,22 +1,3 @@
-<?php
-    include('./include/content.inc.php');
-	$sqlCommand = "SELECT ID, ShortCut, Name FROM ligen WHERE SportverbandID = $id";
-	$tableRows = "";
-	
-	foreach ($dbContext->query($sqlCommand) as $row) {
-		$tableRows .= "<tr>
-						<td class=\"tableCell_Icon\">
-							<form action=\"./ligen_controller.php?ID=".$row['ID']."\" method=\"post\">
-								<input type=\"image\" src=\"./icon/Edit.png\" class=\"listIcon\" title=\"Bearbeiten\" name=\"command\" value=\"edit\" />
-								<input type=\"image\" src=\"./icon/Delete.png\" class=\"listIcon\" title=\"Löschen\" name=\"command\" value=\"delete\" />
-							</form>
-						</td>
-						<td class=\"tableCell_Text\">".$row['ShortCut']."</td>
-						<td class=\"tableCell_Text\">".$row['Name']."</td>
-					</tr>";
-	}
-?>
-
 <!DOCTYPE html>
 <html lang="de">
 	<head>
@@ -30,14 +11,14 @@
 		<script src="./jquery/navigation.js"></script>
         <script src="./jquery/controllerSupport.js"></script>
 		<script type="text/javascript">
-			window.onload = function() {hilightNavItem ('navToSportverbaende');};
+			window.onload = function() {hilightNavItem ('navToLigen');};
 		</script>
 	</head>
 
     <body>
     <div class="grid-container">
   			<div class="header">
-    			<h1>Sportverbände</h1>
+    			<h1>Ligen</h1>
   			</div>
   
   			<div class="navigation">
@@ -54,6 +35,24 @@
 
                         <div class="card-body">
                             <input type="hidden" name="ID" value="<?php echo $id; ?>"/>
+                            
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Sportverband</label>
+                                <div class="col-sm-10">
+                                    <?php
+                                        include('./include/dropdown.inc.php');
+                                        echo dropdownContent (
+                                            "Sportverbaende"                    //$tableName
+                                            , "SportverbandID"                  //$columnName
+                                            , $sportverbandID                   //$preselectedValue
+                                            , "ID"                              //$valueColumn
+                                            , "Name"                            //$textColumn
+                                            , "Name"                            //$orderByClause
+                                        );
+                                    ?>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Kürzel</label>
                                 <div class="col-sm-10">
@@ -65,13 +64,6 @@
                                 <label class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="Name" class="form-control" value="<?php echo $name; ?>"/>
-                                </div>
-                            </div>
-        
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Anzahl Mitglieder</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="NumberOfMembers" class="form-control" value="<?php echo $numberOfMembers; ?>"/>
                                 </div>
                             </div>
                         </div>
@@ -98,42 +90,6 @@
                         </div>
                     </div>
                 </form>
-                <p></p>
-                <div class="card">
-					<div class="card-header">
-                        Ligen des Sportverbands&nbsp;<span class="objectName"> <?php echo $shortCut." - ".$name;?></span> (Anzahl: 
-                        <?php
-                            $sqlCommand = $dbContext->query("SELECT COUNT(*) FROM ligen WHERE SportverbandID = $id");
-                            $countLigen = $sqlCommand->fetchColumn(0);
-                            echo $countLigen;  
-                        ?>)
-                    </div>
-
-                    <div class="card-body">
-                        <?php
-                        if ($countLigen == 0) {
-                            echo "Dieser Verband führt keine Ligen.";
-                        } else {
-                            echo
-                            "<table class=\"table table-light table-striped table-hover\">
-                                <thead>
-                                    <tr><th></th><th><u>Kürzel</u></th><th><u>Name</u></th></tr>
-                                </thead>
-                                <tbody>".$tableRows."</tbody>
-                            </table>";
-                        }
-                        ?>
-                    </div>
-
-                    <div class="card-footer">
-                        <form action="./ligen_create.php" method="post">
-                            <input type="hidden" name="SportverbandID" value="<?php echo $id; ?>"/>
-                            <button type="submit" class="btn btn-success">
-                                <img class="listIcon" src="./icon/Create.png" title="Anlegen"> | Anlegen
-                            </button>
-                        </form>
-                    </div>
-                </div>
             </div>
 
 	  		<div class="footer">

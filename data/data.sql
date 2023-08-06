@@ -2,15 +2,18 @@ CREATE DATABASE		IF NOT EXISTS
 					Sportverbaende;
 
 DROP TABLE			IF EXISTS
+					Ligen;
+DROP TABLE			IF EXISTS
 					Sportverbaende;
 
+--					Sportverbände
 CREATE TABLE		IF NOT EXISTS
 					Sportverbaende (
                     	ID					INT					NOT NULL	AUTO_INCREMENT
                         , ShortCut			VARCHAR (50)		NOT NULL
                         , Name				VARCHAR (255)		NOT NULL
                         , NumberOfMembers	INT					NULL
-                       , PRIMARY KEY (ID)
+                    	, PRIMARY KEY		(ID)
                     );
 
 INSERT INTO			Sportverbaende (
@@ -37,4 +40,30 @@ UNION SELECT		'DBB', 'Deutscher Basketball-Bund', 215609
 UNION SELECT		'DSV', 'Deutscher Segler-Verband', 192743
 UNION SELECT		'DTSV', 'Deutscher Tanzsportverband', 177325
 UNION SELECT		'DBV', 'Deutscher Badminton-Verband', 166069
-UNION SELECT		'BDF', 'Bund Deutscher Radfahrer', 145994
+UNION SELECT		'BDF', 'Bund Deutscher Radfahrer', 145994;
+
+--					Ligen
+CREATE TABLE		IF NOT EXISTS
+					Ligen (
+                    	ID					INT					NOT NULL	AUTO_INCREMENT
+						, SportverbandID	INT
+                        , ShortCut			VARCHAR (50)		NOT NULL
+                        , Name				VARCHAR (255)		NOT NULL
+                		, PRIMARY KEY		(ID)
+						, FOREIGN KEY		(SportverbandID)	REFERENCES	Sportverbaende (ID)
+                    );
+INSERT INTO			ligen (
+						SportverbandID
+						, ShortCut
+    					, Name
+					)
+SELECT				SV.ID
+					, '1. FBL'
+					, 'Erste Fußball Bundesliga'
+FROM				Sportverbaende												AS	SV
+WHERE				Name				=		'Deutscher Fußball-Bund'
+UNION SELECT		SV.ID
+					, '1. FBL'
+					, 'Zweite Fußball Bundesliga'
+FROM				Sportverbaende												AS	SV
+WHERE				Name				=		'Deutscher Fußball-Bund';

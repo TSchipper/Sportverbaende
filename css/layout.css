@@ -2,8 +2,8 @@
   box-sizing: border-box;
 }
 
-.visible {display: block; visibility: visible;}
-.invisible {display: none; visibility: hidden;}
+.visible {display: block;}
+.invisible {display: none;}
 
 body {
   font-family: Arial, Helvetica, sans-serif;

@@ -16,7 +16,6 @@
         //include('./include/content.inc.php');
         $dbContext          =   new mysqli ("localhost", "root", null, "sportverbaende");
         $sqlCommand         =   "INSERT INTO sportverbaende (ShortCut, Name, NumberOfMembers) VALUES ('".$shortCut."', '".$name."', '".$numberOfMembers."')";
-        echo $sqlCommand;
 
         if ($dbContext->query($sqlCommand) === TRUE) {
             return ($dbContext->insert_id);
