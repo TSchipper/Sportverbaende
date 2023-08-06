@@ -1,5 +1,19 @@
 <?php
+    function initDatabase () {
+        // database credentials
+        // database connection string 
+        include('./include/content.inc.php');
     
+        // get data from the SQL file
+        $query = file_get_contents("./data/data.sql");
+    
+        // prepare the SQL statements
+        $stmt = $dbContext->prepare($query);
+
+        // execute the SQL
+        if ($stmt->execute()) {echo "Success";} else {echo "Fail";}
+    }
+
     function loadRecord ($id) {
         include('./include/content.inc.php');
         $sqlCommand         =   "SELECT ShortCut, Name, NumberOfMembers FROM sportverbaende WHERE ID = $id";
@@ -35,6 +49,13 @@
         $sqlCommand         =   $dbContext->prepare("DELETE FROM sportverbaende WHERE ID = :id");
         $sqlCommand->execute(array('id' => $id));
     }
+
+    if (isset ($_POST['command']) AND $_POST['command'] == "initDatabase") {
+        initDatabase ();
+        header("Location: ./index.php");
+        exit();
+    }
+
 
     if (isset ($_POST['command']) AND $_POST['command'] == "create") {
         $newID = createRecord ($_POST['ShortCut'] , $_POST['Name'] , $_POST['NumberOfMembers']);

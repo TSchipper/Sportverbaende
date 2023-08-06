@@ -48,12 +48,13 @@
                 <form action="" method="post">
                     <div class="card">
                         <div class="card-header">
-                            <img class="listIcon" src="./icon/Edit.png" title="Bearbeiten">
+                        <img class="listIcon" src="./icon/Edit.png" title="Bearbeiten">
                             Sportverband&nbsp;<span class="objectName"> <?php echo $shortCut." - ".$name;?> </span>&nbsp;bearbeiten
                         </div>
 
                         <div class="card-body">
                             <input type="hidden" name="ID" value="<?php echo $id; ?>"/>
+                            
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Kürzel</label>
                                 <div class="col-sm-10">
@@ -90,7 +91,7 @@
                                     </button>
                                 </div>
                                 <div class="btn-group invisible" ID="confirmationButtons">
-                                    <button ID="confirmationText" type="button" class="btn btn-light">Soll dieses Objekt gelöscht werden?</button>
+                                <button ID="confirmationText" type="button" class="btn btn-light">Soll dieses Objekt gelöscht werden?</button>
                                     <button ID="confirmationYes" type="submit" name="command" value="delete" class="btn btn-danger">Ja</button>
                                     <button ID="confirmationNo" type="button" class="btn btn-secondary" onClick="deactivateDeleteConfirmation ()">Nein</button>
                                 </div>

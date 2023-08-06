@@ -12,3 +12,9 @@
     <a ID="navToVereine" class="nav-link navItemUnselected" href="./vereine_index.php">Vereine [Mockup]</a>
     </li>
 </ul>
+
+<form action="./sportverbaende_controller.php" method="post">
+    <button type="submit" class="btn btn-danger" name="command" value="initDatabase">
+        <img class="listIcon" src="./icon/Favorite.png" title="Datenbank zurücksezten">&nbsp;Datenbank zurücksezten
+    </button>
+</form>
