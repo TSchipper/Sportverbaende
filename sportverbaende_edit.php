@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="card-body">
-                            <input type="hidden" name="ID" value="<?php echo $id; ?>"/>
+                        <input type="hidden" name="ID" value="<?php echo $id; ?>"/>
                             
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Kürzel</label>
@@ -91,7 +91,7 @@
                                     </button>
                                 </div>
                                 <div class="btn-group invisible" ID="confirmationButtons">
-                                <button ID="confirmationText" type="button" class="btn btn-light">Soll dieses Objekt gelöscht werden?</button>
+                                    <button ID="confirmationText" type="button" class="btn btn-light">Soll dieses Objekt gelöscht werden?</button>
                                     <button ID="confirmationYes" type="submit" name="command" value="delete" class="btn btn-danger">Ja</button>
                                     <button ID="confirmationNo" type="button" class="btn btn-secondary" onClick="deactivateDeleteConfirmation ()">Nein</button>
                                 </div>

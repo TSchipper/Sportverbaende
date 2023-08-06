@@ -56,7 +56,6 @@
         exit();
     }
 
-
     if (isset ($_POST['command']) AND $_POST['command'] == "create") {
         $newID = createRecord ($_POST['ShortCut'] , $_POST['Name'] , $_POST['NumberOfMembers']);
         header("Location: ./sportverbaende_controller.php?ID=".$newID);
@@ -67,18 +66,20 @@
         header("Location: ./sportverbaende_create.php");
         exit();
     }
-    
+
+    if (isset ($_POST['command']) AND $_POST['command'] == "delete") {
+        deleteRecord ($_POST['ID']);
+        header("Location: ./sportverbaende_index.php");
+        exit();
+    }
+
     if (isset($_GET['ID'])) {
         $id                 =   $_GET['ID'];
 
         if (isset ($_POST['command']) AND $_POST['command'] == "save") {
             saveRecord ($id , $_POST['ShortCut'] , $_POST['Name'] , $_POST['NumberOfMembers']);
-        } else if (isset ($_POST['command']) AND $_POST['command'] == "delete") {
-            deleteRecord ($id);
-            header("Location: ./sportverbaende_index.php");
-            exit();
         }
-        
+
         $record             =   loadRecord ($id);
         if (isset ($record)) {
             $shortCut           =   $record['ShortCut'];

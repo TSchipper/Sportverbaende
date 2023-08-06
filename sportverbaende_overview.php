@@ -9,8 +9,14 @@
 		$tableRows .= "<tr>
 						<td class=\"tableCell_Icon\">
 							<form action=\"./sportverbaende_controller.php?ID=".$row['ID']."\" method=\"post\">
-								<input type=\"image\" src=\"./icon/Edit.png\" class=\"listIcon\" title=\"Bearbeiten\" name=\"command\" value=\"edit\" />
-								<input type=\"image\" src=\"./icon/Delete.png\" class=\"listIcon\" title=\"Löschen\" name=\"command\" value=\"delete\" />
+                                <span style=\"white-space: nowrap;\">
+                                    <input type=\"checkbox\"/>
+                                    <a href=\"./sportverbaende_controller.php?ID=".$row['ID']."\">
+                                        <img class=\"listIcon\" src=\"./icon/Edit.png\" title=\"Bearbeiten\">
+                                    </a>
+                                    <img class=\"listIcon\" src=\"./icon/Duplicate.png\" title=\"Duplizieren (Mockup)\">
+                                    <img class=\"listIcon\" src=\"./icon/Delete.png\" title=\"Löschen\" onClick=\"activateDeleteConfirmation (".$row['ID'].")\"/>
+                                </span>
 							</form>
 						</td>
 						<td class=\"tableCell_Text\">".$row['ShortCut']."</td>
@@ -56,9 +62,14 @@
                         </div>
                         <div class="container col-10 visible">
                             <div class="row">
-                                <div class="col-9">Möchten Sie den Datensatz tatsächlich löschen?</div>
-                                <div class="col-1"><button class="btn btn-danger">Ja</button></div>
-                                <div class="col-1"><button class="btn btn-secondary">Nein</button></div>
+                                <form action="sportverbaende_controller.php" method="post">
+                                    <input ID="objectID" type="hidden" name="ID" value=""/>
+                                    <div class="btn-group invisible" ID="confirmationButtons">
+                                        <button ID="confirmationText" type="button" class="btn btn-light">Soll dieses Objekt gelöscht werden?</button>
+                                        <button ID="confirmationYes" type="submit" name="command" value="delete" class="btn btn-danger">Ja</button>
+                                        <button ID="confirmationNo" type="button" class="btn btn-secondary" onClick="deactivateDeleteConfirmation ()">Nein</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

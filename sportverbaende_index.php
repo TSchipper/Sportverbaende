@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		
 		<script src="./jquery/navigation.js"></script>
+        <script src="./jquery/controllerSupport.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script type="text/javascript">
 			window.onload = function() {hilightNavItem ('navToSportverbaende');};
