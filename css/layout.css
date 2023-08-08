@@ -2,8 +2,12 @@
   box-sizing: border-box;
 }
 
-.visible {display: block;}
-.invisible {display: none;}
+.visible {
+  display: block;
+}
+.invisible {
+  display: none;
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -21,12 +25,12 @@ body {
 /* The grid container */
 .grid-container {
   display: grid;
-  grid-template-areas: 
-    'header header header header header header' 
-    'navigation content content content content content' 
-    'footer footer footer footer footer footer';
+  grid-template-areas:
+    "header header header header header header"
+    "navigation content content content content content"
+    "footer footer footer footer footer footer";
   /* grid-column-gap: 10px; - if you want gap between the columns */
-} 
+}
 
 .navigation,
 .content {
@@ -53,33 +57,45 @@ body {
   text-align: left;
 }
 
-.navItemSelected {font-weight: bold;}
-.navItemUnselected {font-weight: normal;}
-
-.listIcon {
-  width:1em;
-  height:1em;
+.navItemSelected {
+  font-weight: bold;
+}
+.navItemUnselected {
+  font-weight: normal;
 }
 
-.tableCell_Icon {width:4em; text-align:right;}
-.tableCell_Text {text-align:left;}
-.tableCell_Number {text-align:right;}
+.listIcon {
+  width: 1em;
+  height: 1em;
+}
 
-.objectName {font-weight: bold; font-style: italic;}
+.tableCell_Icon {
+  width: 4em;
+  text-align: right;
+}
+.tableCell_Text {
+  text-align: left;
+}
+.tableCell_Number {
+  text-align: right;
+}
 
+.objectName {
+  font-weight: bold;
+  font-style: italic;
+}
 
 .overview {
-	display:grid;
-	grid-template-rows:1;
-	grid-template-columns:4;
-	grid-template-areas:
-		"overviewContent overviewContent overviewContent overviewPlugin";
+  display: grid;
+  grid-template-rows: 1;
+  grid-template-columns: 4;
+  grid-template-areas: "overviewContent overviewContent overviewContent overviewPlugin";
 }
 
 .overviewContent {
-  grid-area:overviewContent;
+  grid-area: overviewContent;
 }
 
 .overviewPlugin {
-  grid-area:overviewPlugin;
+  grid-area: overviewPlugin;
 }
