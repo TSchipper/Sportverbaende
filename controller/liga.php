@@ -2,7 +2,8 @@
 
 function loadRecord($id)
 {
-    include('./include/content.inc.php');
+    include('../../include/dbContext.inc.php');
+
     $sqlCommand         =   "SELECT SportverbandID, ShortCut, Name FROM ligen WHERE ID = $id";
     foreach ($dbContext->query($sqlCommand) as $row) {
         $sportverbandID     =   $row['SportverbandID'];
@@ -15,7 +16,6 @@ function loadRecord($id)
 function createRecord($sportverbandID, $shortCut, $name)
 {
     //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
-    //include('./include/content.inc.php');
     $dbContext          =   new mysqli("localhost", "root", null, "sportverbaende");
     $sqlCommand         =   "INSERT INTO ligen (SportverbandID, ShortCut, Name) VALUES ('".$sportverbandID."', '".$shortCut."', '".$name."')";
 
@@ -28,14 +28,16 @@ function createRecord($sportverbandID, $shortCut, $name)
 
 function saveRecord($id, $sportverbandID, $shortCut, $name)
 {
-    include('./include/content.inc.php');
+    include('../../include/dbContext.inc.php');
+
     $sqlCommand         =   $dbContext->prepare("UPDATE ligen SET SportverbandID = :sportverbandID, ShortCut = :shortCut, Name = :name WHERE ID = :id");
     $sqlCommand->execute(array('id' => $id, 'sportverbandID' => $sportverbandID, 'shortCut' => $shortCut, 'name' => $name));
 }
 
 function deleteRecord($id)
 {
-    include('./include/content.inc.php');
+    include('../../include/dbContext.inc.php');
+
     $sqlCommand         =   $dbContext->prepare("DELETE FROM ligen WHERE ID = :id");
     $sqlCommand->execute(array('id' => $id));
 }

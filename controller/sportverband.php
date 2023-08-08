@@ -4,7 +4,9 @@ function initDatabase()
 {
     // database credentials
     // database connection string
-    include('./include/content.inc.php');
+    include('../../include/dbContext.inc.php');
+
+
 
     // get data from the SQL file
     $query = file_get_contents("./data/data.sql");
@@ -22,7 +24,7 @@ function initDatabase()
 
 function loadRecord($id)
 {
-    include('./include/content.inc.php');
+    include('./include/dbContext.inc.php');
     $sqlCommand         =   "SELECT ShortCut, Name, NumberOfMembers FROM sportverbaende WHERE ID = $id";
     foreach ($dbContext->query($sqlCommand) as $row) {
         $shortCut           =   $row['ShortCut'];
@@ -35,7 +37,6 @@ function loadRecord($id)
 function createRecord($shortCut, $name, $numberOfMembers)
 {
     //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
-    //include('./include/content.inc.php');
     $dbContext          =   new mysqli("localhost", "root", null, "sportverbaende");
     $sqlCommand         =   "INSERT INTO sportverbaende (ShortCut, Name, NumberOfMembers) VALUES ('".$shortCut."', '".$name."', '".$numberOfMembers."')";
 
@@ -48,14 +49,16 @@ function createRecord($shortCut, $name, $numberOfMembers)
 
 function saveRecord($id, $shortCut, $name, $numberOfMembers)
 {
-    include('./include/content.inc.php');
+    include('../../include/dbContext.inc.php');
+
     $sqlCommand         =   $dbContext->prepare("UPDATE sportverbaende SET ShortCut = :shortCut, Name = :name, NumberOfMembers = :numberOfMembers WHERE ID = :id");
     $sqlCommand->execute(array('id' => $id, 'shortCut' => $shortCut, 'name' => $name, 'numberOfMembers' => $numberOfMembers ));
 }
 
 function deleteRecord($id)
 {
-    include('./include/content.inc.php');
+    include('../../include/dbContext.inc.php');
+
     $sqlCommand         =   $dbContext->prepare("DELETE FROM sportverbaende WHERE ID = :id");
     $sqlCommand->execute(array('id' => $id));
 }
@@ -68,18 +71,18 @@ if (isset($_POST['command']) and $_POST['command'] == "initDatabase") {
 
 if (isset($_POST['command']) and $_POST['command'] == "create") {
     $newID = createRecord($_POST['ShortCut'], $_POST['Name'], $_POST['NumberOfMembers']);
-    header("Location: ./sportverbaende_controller.php?ID=".$newID);
+    header("Location: ../../controller/sportverband.php?ID=".$newID);
     exit();
 }
 
 if (isset($_POST['command']) and $_POST['command'] == "discardCreate") {
-    header("Location: ./sportverbaende_create.php");
+    header("Location: ../../view/create.php");
     exit();
 }
 
 if (isset($_POST['command']) and $_POST['command'] == "delete") {
     deleteRecord($_POST['ID']);
-    header("Location: ./sportverbaende_index.php");
+    header("Location: ../../view/sportverband/index.php");
     exit();
 }
 
@@ -95,7 +98,7 @@ if (isset($_GET['ID'])) {
         $shortCut           =   $record['ShortCut'];
         $name               =   $record['Name'];
         $numberOfMembers    =   $record['NumberOfMembers'];
-        include('./sportverbaende_edit.php');
+        include('../../view/sportverband/edit.php');
     } else {
         echo "M I S S I N G   R E C O R D";
     }

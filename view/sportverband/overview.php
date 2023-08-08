@@ -1,5 +1,5 @@
 <?php
-include('./include/content.inc.php');
+include('../../include/dbContext.inc.php');
 $sqlCommand = "SELECT ID, ShortCut, Name, NumberOfMembers FROM sportverbaende";
 $tableRows = "";
 $chartLabels = "";
@@ -12,10 +12,10 @@ foreach ($dbContext->query($sqlCommand) as $row) {
                                 <span style=\"white-space: nowrap;\">
                                     <input type=\"checkbox\"/>
                                     <a href=\"./sportverbaende_controller.php?ID=".$row['ID']."\">
-                                        <img class=\"listIcon\" src=\"./icon/Edit.png\" title=\"Bearbeiten\">
+                                        <img class=\"listIcon\" src=\"../../icon/Edit.png\" title=\"Bearbeiten\">
                                     </a>
-                                    <img class=\"listIcon\" src=\"./icon/Duplicate.png\" title=\"Duplizieren (Mockup)\">
-                                    <img class=\"listIcon\" src=\"./icon/Delete.png\" title=\"Löschen\" onClick=\"activateDeleteConfirmation (".$row['ID'].")\"/>
+                                    <img class=\"listIcon\" src=\"../../icon/Duplicate.png\" title=\"Duplizieren (Mockup)\">
+                                    <img class=\"listIcon\" src=\"../../icon/Delete.png\" title=\"Löschen\" onClick=\"activateDeleteConfirmation (".$row['ID'].")\"/>
                                 </span>
 							</form>
 						</td>
