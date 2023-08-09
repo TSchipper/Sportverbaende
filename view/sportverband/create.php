@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../css/layout.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script src="../../jquery/navigation.js"></script>
+    <script src="../../jquery/html.body.navigation"></script>
     <script type="text/javascript">
         window.onload = function() {
             hilightNavItem('navToSportverbaende');
@@ -20,12 +20,13 @@
 
 <body>
     <div class="grid-container">
-        <div class="header">
-            <h1>Sportverbände</h1>
-        </div>
-        <?php include('.include(../navigation.inc.php)'); ?>
+        <?php
+        include('../../include/html.body.header.inc.php');
+        showDynamicHeader("Sportverbände");
+        include('../../include/html.body.navigation.inc.php');
+        ?>
         <div class="content">
-            <form action="sportverbaende_controller.php" method="post">
+            <form action="../../controller/sportverband.php" method="post">
                 <div class="card">
                     <div class="card-header">
                         <img class="listIcon" src="./icon/Create.png">
@@ -66,7 +67,7 @@
                 </div>
             </form>
         </div>
-        <?php include('../include/footer.inc.php');?>
+        <?php include('../include/html.body.footer.inc.php');?>
     </div>
 </body>
 

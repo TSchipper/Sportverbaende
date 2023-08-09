@@ -2,7 +2,7 @@
 
 function loadRecord($id)
 {
-    include('../../include/dbContext.inc.php');
+    include('../include/dbContext.pdo.inc.php');
 
     $sqlCommand         =   "SELECT SportverbandID, ShortCut, Name FROM ligen WHERE ID = $id";
     foreach ($dbContext->query($sqlCommand) as $row) {
@@ -15,6 +15,8 @@ function loadRecord($id)
 
 function createRecord($sportverbandID, $shortCut, $name)
 {
+    include('../include/dbContext.pdo.inc.php');
+
     //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
     $dbContext          =   new mysqli("localhost", "root", null, "sportverbaende");
     $sqlCommand         =   "INSERT INTO ligen (SportverbandID, ShortCut, Name) VALUES ('".$sportverbandID."', '".$shortCut."', '".$name."')";
@@ -28,7 +30,7 @@ function createRecord($sportverbandID, $shortCut, $name)
 
 function saveRecord($id, $sportverbandID, $shortCut, $name)
 {
-    include('../../include/dbContext.inc.php');
+    include('../include/dbContext.pdo.inc.php');
 
     $sqlCommand         =   $dbContext->prepare("UPDATE ligen SET SportverbandID = :sportverbandID, ShortCut = :shortCut, Name = :name WHERE ID = :id");
     $sqlCommand->execute(array('id' => $id, 'sportverbandID' => $sportverbandID, 'shortCut' => $shortCut, 'name' => $name));
@@ -36,7 +38,7 @@ function saveRecord($id, $sportverbandID, $shortCut, $name)
 
 function deleteRecord($id)
 {
-    include('../../include/dbContext.inc.php');
+    include('../include/dbContext.pdo.inc.php');
 
     $sqlCommand         =   $dbContext->prepare("DELETE FROM ligen WHERE ID = :id");
     $sqlCommand->execute(array('id' => $id));
@@ -44,7 +46,7 @@ function deleteRecord($id)
 
 if (isset($_POST['command']) and $_POST['command'] == "create") {
     $newID = createRecord($_POST['SportverbandID'], $_POST['ShortCut'], $_POST['Name']);
-    header("Location: ./ligen_controller.php?ID=".$newID);
+    header("Location: ../../controller/liga.php?ID=".$newID);
     exit();
 }
 

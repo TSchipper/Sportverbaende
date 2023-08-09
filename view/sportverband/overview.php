@@ -1,33 +1,4 @@
-<?php
-include('../../include/dbContext.inc.php');
-$sqlCommand = "SELECT ID, ShortCut, Name, NumberOfMembers FROM sportverbaende";
-$tableRows = "";
-$chartLabels = "";
-$chartData = "";
-
-foreach ($dbContext->query($sqlCommand) as $row) {
-    $tableRows .= "<tr>
-						<td class=\"tableCell_Icon\">
-							<form action=\"./sportverbaende_controller.php?ID=".$row['ID']."\" method=\"post\">
-                                <span style=\"white-space: nowrap;\">
-                                    <input type=\"checkbox\"/>
-                                    <a href=\"./sportverbaende_controller.php?ID=".$row['ID']."\">
-                                        <img class=\"listIcon\" src=\"../../icon/Edit.png\" title=\"Bearbeiten\">
-                                    </a>
-                                    <img class=\"listIcon\" src=\"../../icon/Duplicate.png\" title=\"Duplizieren (Mockup)\">
-                                    <img class=\"listIcon\" src=\"../../icon/Delete.png\" title=\"Löschen\" onClick=\"activateDeleteConfirmation (".$row['ID'].")\"/>
-                                </span>
-							</form>
-						</td>
-						<td class=\"tableCell_Text\">".$row['ShortCut']."</td>
-						<td class=\"tableCell_Text\">".$row['Name']."</td>
-						<td class=\"tableCell_Number\">".number_format($row['NumberOfMembers'], 0, '', '.')."</td>
-					</tr>";
-    $chartLabels .=  "'".$row['Name']." (".number_format($row['NumberOfMembers'], 0, '', '.').")', ";
-    $chartData .=  "'".$row['NumberOfMembers']."',";
-}
-$chartLabels = substr($chartLabels, 0, strlen($chartLabels) - 2);
-$chartData = substr($chartData, 0, strlen($chartData) - 1);
+<?php include('../../controller/sportverband.php');
 ?>
 
 <div class="overview">
@@ -36,13 +7,8 @@ $chartData = substr($chartData, 0, strlen($chartData) - 1);
         <div class="card">
             <div class="card-header">
                 Sportverbände (Anzahl:
-                <?php
-                    $sqlCommand = $dbContext->query("SELECT COUNT(*) FROM sportverbaende");
-$countSportverbaende = $sqlCommand->fetchColumn(0);
-echo $countSportverbaende;
-?>)
+                <?php echo recordCount(1); ?>
             </div>
-
             <div class="card-body">
                 <table class="table table-light table-striped table-hover">
                     <thead>
@@ -52,6 +18,8 @@ echo $countSportverbaende;
                             <th><u>Name</u></th>
                             <th><u>Anzahl Mitglieder</u></th>
                         </tr>
+                        <?php echo overview(); ?>
+                        overview()
                     </thead>
                     <tbody>
                         <?php echo $tableRows;?>

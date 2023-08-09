@@ -1,21 +1,3 @@
-<?php
-include('../../include/dbContext.inc.php');
-
-$sqlCommand = "SELECT ID, ShortCut, Name FROM ligen WHERE SportverbandID = $id";
-$tableRows = "";
-
-foreach ($dbContext->query($sqlCommand) as $row) {
-    $tableRows .= "<tr>
-						<td class=\"tableCell_Icon\">
-							<form action=\"./ligen_controller.php?ID=".$row['ID']."\" method=\"post\">
-								<input type=\"image\" src=\"./icon/Edit.png\" class=\"listIcon\" title=\"Bearbeiten\" name=\"command\" value=\"edit\" />
-								<input type=\"image\" src=\"./icon/Delete.png\" class=\"listIcon\" title=\"Löschen\" name=\"command\" value=\"delete\" />
-							</form>
-						</td>
-						<td class=\"tableCell_Text\">".$row['ShortCut']."</td>
-						<td class=\"tableCell_Text\">".$row['Name']."</td>
-					</tr>";
-}
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +12,8 @@ foreach ($dbContext->query($sqlCommand) as $row) {
     <link rel="stylesheet" href="../../css/layout.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script src="../../jquery/navigation.js"></script>
-    <script src="./jquery/controllerSupport.js"></script>
+    <script src="../../jquery/html.body.navigation"></script>
+    <script src="../../jquery/controllerSupport.js"></script>
     <script type="text/javascript">
         window.onload = function() {
             hilightNavItem('navToSportverbaende');
@@ -41,11 +23,11 @@ foreach ($dbContext->query($sqlCommand) as $row) {
 
 <body>
     <div class="grid-container">
-        <div class="header">
-            <h1>Sportverbände</h1>
-        </div>
-
-        <?php include('.include(../../include/navigation.inc.php):');?>
+        <?php
+        include('../../include/html.body.header.inc.php');
+        showDynamicHeader("Sportverbände");
+        include('../../include/html.body.navigation.inc.php');
+        ?>
         <div class="content">
             <form action="" method="post">
                 <div class="card">
@@ -57,32 +39,7 @@ foreach ($dbContext->query($sqlCommand) as $row) {
                     </div>
 
                     <div class="card-body">
-                        <input type="hidden" name="ID"
-                            value="<?php echo $id; ?>" />
 
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Kürzel</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="ShortCut" class="form-control"
-                                    value="<?php echo $shortCut; ?>" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="Name" class="form-control"
-                                    value="<?php echo $name; ?>" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Anzahl Mitglieder</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="NumberOfMembers" class="form-control"
-                                    value="<?php echo $numberOfMembers; ?>" />
-                            </div>
-                        </div>
                     </div>
 
                     <div class="card-footer">
@@ -120,9 +77,9 @@ foreach ($dbContext->query($sqlCommand) as $row) {
                     (Anzahl:
                     <?php
                             $sqlCommand = $dbContext->query("SELECT COUNT(*) FROM ligen WHERE SportverbandID = $id");
-$countLigen = $sqlCommand->fetchColumn(0);
-echo $countLigen;
-?>)
+        $countLigen = $sqlCommand->fetchColumn(0);
+        echo $countLigen;
+        ?>)
                 </div>
 
                 <div class="card-body">
@@ -138,7 +95,7 @@ if ($countLigen == 0) {
                                 <tbody>".$tableRows."</tbody>
                             </table>";
 }
-?>
+        ?>
                 </div>
 
                 <div class="card-footer">
@@ -152,7 +109,7 @@ if ($countLigen == 0) {
                 </div>
             </div>
         </div>
-        <?php include('../include/footer.inc.php');?>
+        <?php include('../include/html.body.footer.inc.php');?>
     </div>
 </body>
 

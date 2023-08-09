@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="../../css/layout.css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-	<script src="../../jquery/navigation.js"></script>
+	<script src="../../jquery/html.body.navigation"></script>
 	<script type="text/javascript">
 		window.onload = function() {
 			hilightNavItem('navToVereine');
@@ -20,15 +20,15 @@
 
 <body>
 	<div class="grid-container">
-		<div class="header">
-			<h1>Vereine</h1>
-		</div>
-
-		<?php include('../../include/navigation.inc.php');?>
+		<?php
+        include('../../include/html.body.header.inc.php');
+		showDynamicHeader("Vereine");
+		include('../../include/html.body.navigation.inc.php');
+		?>
 		<div class="content">
 			<h2>Vereine<h2>
 		</div>
-		<?php include('../../include/footer.inc.php');?>
+		<?php include('../../include/html.body.footer.inc.php');?>
 	</div>
 </body>
 
