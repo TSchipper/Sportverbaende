@@ -18,17 +18,20 @@ class DBController
             $this->selectDB();//chon database
         }
     }
+
     //ham ket noi CSDL
     public function connectDB()
     {
         $conn = mysqli_connect($this->host, $this->user, /*$this->pass*/ null, $this->database);
         return $conn;
     }
+
     //ham chon DB
     public function selectDB()
     {
         mysqli_select_db($this->conn, $this->database);
     }
+
     //ham chay cau lenh
     public function runQuery($query)
     {
@@ -40,8 +43,8 @@ class DBController
         if(!empty($restltset)) {
             return $restltset;
         }
-
     }
+
     //ham lay ve tong so dong
     public function numRows($query)
     {
@@ -49,6 +52,7 @@ class DBController
         $rowcount = mysqli_num_rows($result);//lay ve tong so dong
         return $rowcount;
     }
+
     //ham them du lieu
     public function insert($query)
     {
@@ -59,6 +63,7 @@ class DBController
         }
         return $insert_id;
     }
+
     //ham thuc thi cau lenh
     public function execute($query)
     {

@@ -1,8 +1,5 @@
 function hilightNavItem(navItemSelected) {
-  //alert (navItemSelected);
-  $("#navToWilkommen")
-    .removeClass("navItemSelected")
-    .addClass("navItemUnselected");
+  $("#navToHome").removeClass("navItemSelected").addClass("navItemUnselected");
   $("#navToSportverbaende")
     .removeClass("navItemSelected")
     .addClass("navItemUnselected");
@@ -11,8 +8,8 @@ function hilightNavItem(navItemSelected) {
     .removeClass("navItemSelected")
     .addClass("navItemUnselected");
 
-  if (navItemSelected == "navToWilkommen") {
-    $("#navToWilkommen")
+  if (navItemSelected == "navToHome") {
+    $("#navToHome")
       .removeClass("navItemUnselected")
       .addClass("navItemSelected");
   } else if (navItemSelected == "navToSportverbaende") {

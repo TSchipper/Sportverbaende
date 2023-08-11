@@ -2,16 +2,15 @@
 <html lang="de">
 
 <?php
-    include('../../include/html.head.inc.php');
+    include('../../include/html.head/html.head.inc.php');
 showDynamicHtmlHead("Sportverbände", "navToLigen");
 ?>
 
 <body>
     <div class="grid-container">
         <?php
-        include('../../include/html.body.header.inc.php');
-showDynamicHeader("Ligen");
-include('../../include/html.body.navigation.inc.php');
+        include('./include/html.body.header.inc.php');
+include('./include/html.body/html.body.navigation.inc.php');
 ?>
 
         <div class="content">

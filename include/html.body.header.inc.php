@@ -1,6 +1,5 @@
-<?php
-
-function showDynamicHeader($title)
-{
-    echo("<div class=\"header\"><h1>".$title."</h1></div>");
-}
+<div class="header">
+    <h1>
+        <?php echo $title;?>
+    </h1>
+</div>

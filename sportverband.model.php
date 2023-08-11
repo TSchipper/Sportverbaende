@@ -1,11 +1,7 @@
 <?php
 
-include("./DBController.php");
-
 class Sportverband
 {
-    private $dbContext;
-
     public $id;
     public $shortCut;
     public $name;
@@ -13,46 +9,25 @@ class Sportverband
 
     public function __construct($id, $shortCut, $name, $numberOfMembers)
     {
-        $this->dbContext        =       new DBController();
         $this->id               =       $id;
         $this->shortCut         =       $shortCut;
         $this->name             =       $name;
         $this->numberOfMembers  =       $numberOfMembers;
     }
 
-    public static function welcomeMessage()
+    /*
+    public function listCount($dbContext)
     {
-        return "Wilkommen, ich bin das model 'sportverband.php'";
+        return ($dbContext.numRows("SELECT COUNT (*) FROM sportverbaende"));
     }
 
-    public function object2tr()
-    {
-        return (
-            "<tr>
-			    <td class=\"tableCell_Icon\">
-				    <form action=\"../../controller/sportverband.php?ID=".$this->ID."\" method=\"post\">
-                        <span style=\"white-space: nowrap;\">
-                            <input type=\"checkbox\"/>
-                            <a href=\"../../controller/sportverband.php?ID=".$this->ID."\">
-                                <img class=\"listIcon\" src=\"../../icon/Edit.png\" title=\"Bearbeiten\">
-                        </a>
-                        <img class=\"listIcon\" src=\"../../icon/Duplicate.png\" title=\"Duplizieren (Mockup)\">
-                        <img class=\"listIcon\" src=\"../../icon/Delete.png\" title=\"Löschen\" onClick=\"activateDeleteConfirmation (".$sportverband->ID.")\"/>
-                        </span>
-	    	    	</form>
-	        	</td>
-    		    <td class=\"tableCell_Text\">".$this->ShortCut."</td>
-     	    	<td class=\"tableCell_Text\">".$this->Name."</td>
-	    	    <td class=\"tableCell_Number\">".number_format($this->NumberOfMembers, 0, '', '.')."</td>
-	       </tr>"
-        );
-    }
-
-    public static function list()
+    public function list($dbContext)
     {
         $_sportverbaende = array();
 
         $sqlCommand = "SELECT ID, ShortCut, Name, NumberOfMembers FROM sportverbaende";
+
+
         foreach ($dbContext->runQuery($sqlCommand) as $row) {
             $id =  $row['ID'];
             $shortCut =  $row['ShortCut'];
@@ -60,12 +35,26 @@ class Sportverband
             $numberOfMembers =  $row['NumberOfMembers'];
 
             $_sportverband = new Sportverband($id, $shortCut, $name, $numberOfMembers);
+
             $_sportverbaende[]=$_sportverband;
         }
         return $_sportverbaende;
     }
 
-    public function create()
+    public function getObjectByID($dbContext, $id)
+    {
+        $sqlCommand = "SELECT ShortCut, Name, NumberOfMembers FROM sportverbaende WHERE ID = ".$id;
+        foreach ($dbContext->runQuery($sqlCommand) as $row) {
+            $shortCut =  $row['ShortCut'];
+            $name =  $row['Name'];
+            $numberOfMembers =  $row['NumberOfMembers'];
+
+            $_sportverband = new Sportverband($id, $shortCut, $name, $numberOfMembers);
+        }
+        return $_sportverband;
+    }
+
+    public function create($dbContext)
     {
         //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
         $sqlCommand         =   "INSERT INTO sportverbaende (ShortCut, Name, NumberOfMembers) VALUES ('".$this->shortCut."', '".$this->name."', '".$this->numberOfMembers."')";
@@ -76,15 +65,16 @@ class Sportverband
         }
     }
 
-    public function update()
+    public function update($dbContext)
     {
         $sqlCommand         =   $dbContext->prepare("UPDATE sportverbaende SET ShortCut = :shortCut, Name = :name, NumberOfMembers = :numberOfMembers WHERE ID = :id");
         $sqlCommand->execute(array('id' => $this->id, 'shortCut' => $this->shortCut, 'name' => $this->name, 'numberOfMembers' => $this->numberOfMembers ));
     }
 
-    public function delete()
+    public function delete($dbContext)
     {
         $sqlCommand         =   $dbContext->prepare("DELETE FROM sportverbaende WHERE ID = :id");
         $sqlCommand->execute(array('id' => $this->id));
     }
+    */
 }

@@ -78,3 +78,4 @@ if (isset($_GET['ID'])) {
 } else {
     echo "I N V A L I D   R E Q U E S T";
 }
+?>
