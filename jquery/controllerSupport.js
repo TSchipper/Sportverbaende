@@ -3,10 +3,11 @@ function isEmpty(value) {
   return value === undefined || value === null || value === "";
 }
 
-function activateDeleteConfirmation($objectID) {
+function activateDeleteConfirmation($objectID, $DisplayName) {
   if (!isEmpty($objectID)) {
     $("#objectID").attr("value", $objectID);
   }
+  $("#spanObjectName").html($DisplayName);
   $("#btnDelete").attr("width", "0");
   $("#btnDelete").removeClass("visible").addClass("invisible");
   $("#confirmationButtons").removeClass("invisible").addClass("visible");

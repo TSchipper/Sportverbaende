@@ -1,81 +1,91 @@
 <?php
 
-function loadRecord($id)
-{
-    include('../include/dbContext.pdo.inc.php');
+#-------------------------------------------------------------------------------
+# Einbindung der benötigten  Modelle
+#-------------------------------------------------------------------------------
+include("./support/FieldSettings.php");
+include("./model/basic.php");
+include("./model/Sportverband.php");
+include("./model/liga.php");
+#-------------------------------------------------------------------------------
 
-    $sqlCommand         =   "SELECT SportverbandID, ShortCut, Name FROM ligen WHERE ID = $id";
-    foreach ($dbContext->query($sqlCommand) as $row) {
-        $sportverbandID     =   $row['SportverbandID'];
-        $shortCut           =   $row['ShortCut'];
-        $name               =   $row['Name'];
-    }
-    return array("SportverbandID" => $sportverbandID, "ShortCut" => $shortCut, "Name" => $name);
+#-------------------------------------------------------------------------------
+# Einbindung und Initialisierung DB-Connector
+#-------------------------------------------------------------------------------
+include("./support/DBController.php");
+$dbContext = new DBController();
+$fieldSettings = new FieldSettings($dbContext, "Liga");
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Ausführung des Controllers
+#-------------------------------------------------------------------------------
+
+$title = "Liga";
+$navElement = "navToLiga";
+
+# Anzeige einer Übersicht aller Ligen
+if  (
+    (!isset($_POST['command']) and !isset($_GET['id']))
+    or
+    (isset($_POST['command']) and $_POST['command'] == "list")
+) {
+    include("./liga.index.php");
 }
 
-function createRecord($sportverbandID, $shortCut, $name)
-{
-    include('../include/dbContext.pdo.inc.php');
-
-    //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
-    $dbContext          =   new mysqli("localhost", "root", null, "sportverbaende");
-    $sqlCommand         =   "INSERT INTO ligen (SportverbandID, ShortCut, Name) VALUES ('".$sportverbandID."', '".$shortCut."', '".$name."')";
-
-    if ($dbContext->query($sqlCommand) === true) {
-        return ($dbContext->insert_id);
-    } else {
-        return -1;
-    }
+# Anzeige einer Liga per ID als Get-Parameter
+elseif (isset($_GET['id'])) {
+    $ID = $_GET['id'];
+    $liga = Liga::getObjectByID($dbContext, $ID);
+    include("./liga.edit.php");
 }
 
-function saveRecord($id, $sportverbandID, $shortCut, $name)
-{
-    include('../include/dbContext.pdo.inc.php');
+# Erstellung einer neuen Liga
+elseif (isset($_POST['command']) and $_POST['command'] == "create") {
+    $object = new Liga(
+        "",
+        $_POST['SportverbandID'],
+        $_POST['ShortCut'],
+        $_POST['Name']
+    );
+    $newID = create($dbContext, $object);
+    header("Location: ./liga.controller.php?id=".$newID);
+    exit();
 
-    $sqlCommand         =   $dbContext->prepare("UPDATE ligen SET SportverbandID = :sportverbandID, ShortCut = :shortCut, Name = :name WHERE ID = :id");
-    $sqlCommand->execute(array('id' => $id, 'sportverbandID' => $sportverbandID, 'shortCut' => $shortCut, 'name' => $name));
 }
 
-function deleteRecord($id)
-{
-    include('../include/dbContext.pdo.inc.php');
-
-    $sqlCommand         =   $dbContext->prepare("DELETE FROM ligen WHERE ID = :id");
-    $sqlCommand->execute(array('id' => $id));
-}
-
-if (isset($_POST['command']) and $_POST['command'] == "create") {
-    $newID = createRecord($_POST['SportverbandID'], $_POST['ShortCut'], $_POST['Name']);
-    header("Location: ../../controller/liga.php?ID=".$newID);
+# Rückführung zum Eingabeformular zur Erstellung einer neuen Liga nach Verwerfen
+elseif (isset($_POST['command']) and $_POST['command'] == "discardCreate") {
+    header("Location: ./liga.create.php");
     exit();
 }
 
-if (isset($_POST['command']) and $_POST['command'] == "discardCreate") {
-    header("Location: ./ligen_create.php");
+# Bearbeitung einer bestehenden Liga
+elseif (isset($_POST['command']) and $_POST['command'] == "update") {
+    $object = new Liga(
+        $_POST['ID'],
+        null                          #DisplayName
+        ,
+        $_POST['SportverbandID'],
+        null                          #Sportverband
+        ,
+        $_POST['ShortCut'],
+        $_POST['Name']
+    );
+    Liga::update($dbContext, $object);
+    header("Location: ./liga.controller.php?id=".$object->id);
     exit();
 }
 
-if (isset($_GET['ID'])) {
-    $id                 =   $_GET['ID'];
-
-    if (isset($_POST['command']) and $_POST['command'] == "save") {
-        saveRecord($id, $_POST['SportverbandID'], $_POST['ShortCut'], $_POST['Name']);
-    } elseif (isset($_POST['command']) and $_POST['command'] == "delete") {
-        deleteRecord($id);
-        header("Location: ./ligen_index.php");
-        exit();
-    }
-
-    $record             =   loadRecord($id);
-    if (isset($record)) {
-        $sportverbandID =   $record['SportverbandID'];
-        $shortCut       =   $record['ShortCut'];
-        $name           =   $record['Name'];
-        include('./ligen_edit.php');
-    } else {
-        echo "M I S S I N G   R E C O R D";
-    }
-} else {
-    echo "I N V A L I D   R E Q U E S T";
+# Rückführung zum Eingabeformular zur Bearbeitung einer bestehenden Liga nach Verwerfen
+elseif (isset($_POST['command']) and $_POST['command'] == "discardUpdate" and isset($_POST['ID'])) {
+    $ID = $_POST['ID'];
+    header("Location: ./liga.controller.php?id=".$ID);
+    exit();
 }
-?>
+
+# Löschung einer bestehenden Liga und Rückführung zur Übersicht aller Ligen
+elseif (isset($_POST['command']) and $_POST['command'] == "delete") {
+    Liga::delete($dbContext, $_POST['ID']);
+    include("./liga.index.php");
+}

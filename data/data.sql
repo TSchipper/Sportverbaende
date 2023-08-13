@@ -1,6 +1,8 @@
 CREATE DATABASE		IF NOT EXISTS
 					Sportverbaende;
 
+USE					Sportverbaende;
+
 DROP TABLE			IF EXISTS
 					Ligen;
 DROP TABLE			IF EXISTS
@@ -15,6 +17,17 @@ CREATE TABLE		IF NOT EXISTS
                         , NumberOfMembers	INT					NULL
                     	, PRIMARY KEY		(ID)
                     );
+
+DROP VIEW			IF EXISTS
+					Sportverbaende_Presentation;
+CREATE VIEW			Sportverbaende_Presentation									AS
+--	SELECT * FROM Sportverbaende_Presentation
+SELECT				ID
+					, CONCAT (ShortCut, ' - ', Name)							AS	DisplayName
+					, ShortCut
+					, Name
+					, NumberOfMembers
+FROM				Sportverbaende;
 
 INSERT INTO			Sportverbaende (
 						ShortCut
@@ -52,6 +65,21 @@ CREATE TABLE		IF NOT EXISTS
                 		, PRIMARY KEY		(ID)
 						, FOREIGN KEY		(SportverbandID)	REFERENCES	Sportverbaende (ID)
                     );
+
+DROP VIEW			IF EXISTS
+					Ligen_Presentation;
+CREATE VIEW			Ligen_Presentation											AS
+--	SELECT * FROM Ligen_Presentation
+SELECT				L.ID
+					, CONCAT (L.ShortCut, ' - ', L.Name)						AS	DisplayName
+					, L.SportverbandID
+					, CONCAT (SV.ShortCut, ' - ', SV.Name)						AS	Sportverband
+					, L.ShortCut
+					, L.Name
+FROM				Ligen														AS	L
+LEFT JOIN			Sportverbaende												AS	SV
+ON					L.SportverbandID	=		SV.ID;
+
 INSERT INTO			ligen (
 						SportverbandID
 						, ShortCut

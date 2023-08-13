@@ -1,6 +1,6 @@
 <?php
-$title = "Sportverbände";
-$navElement = "navToSportverband";
+$title = "Ligen";
+$navElement = "navToLiga";
 include('./include/html.head.inc.php');
 ?>
 
@@ -10,7 +10,7 @@ include('./include/html.head.inc.php');
             include('./include/html.body.header.inc.php');
 include('./include/html.body.navigation.inc.php'); ?>
 		<div class="content">
-			<?php include('./Sportverband.overview.php'); ?>
+			<?php include('./liga.overview.php'); ?>
 		</div>
 		<?php include('./include/html.body.footer.inc.php'); ?>
 	</div>

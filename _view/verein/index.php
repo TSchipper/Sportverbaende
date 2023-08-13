@@ -13,7 +13,7 @@
 	<script src="./jquery/html.body.navigation"></script>
 	<script type="text/javascript">
 		window.onload = function() {
-			hilightNavItem('navToVereine');
+			hilightNavItem('navToVerein');
 		};
 	</script>
 </head>

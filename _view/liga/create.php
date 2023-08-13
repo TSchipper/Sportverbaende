@@ -3,7 +3,7 @@
 
 <?php
     include('../../include/html.head/html.head.inc.php');
-showDynamicHtmlHead("Ligen", "navToLigen");
+showDynamicHtmlHead("Ligen", "navToLiga");
 ?>
 
 <body>
@@ -29,7 +29,6 @@ include('../../include/html.body/html.body.navigation.inc.php');
                             <label class="col-sm-2 col-form-label">Sportverband</label>
                             <div class="col-sm-10">
                                 <?php
-                                include('../../include/dropdown.inc.php');
 
 echo dropdownContent(
     "Sportverbaende"                    //$tableName

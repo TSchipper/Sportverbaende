@@ -3,7 +3,7 @@
 
 <?php
     include('../../include/html.head/html.head.inc.php');
-showDynamicHtmlHead("Sportverbände", "navToLigen");
+showDynamicHtmlHead("Sportverbände", "navToLiga");
 ?>
 
 <body>

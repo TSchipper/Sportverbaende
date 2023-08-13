@@ -1,6 +1,6 @@
 <?php
 $title = "Sportverbände";
-$navElement = "navToSportverbaende";
+$navElement = "navToSportverband";
 include('./include/html.head.inc.php');
 ?>
 
@@ -11,7 +11,7 @@ include('./include/html.head.inc.php');
 include('./include/html.body.navigation.inc.php');
 ?>
         <div class="content">
-            <form action="./sportverband.controller.php" method="post">
+            <form action="./Sportverband.controller.php" method="post">
                 <div class="card">
                     <div class="card-header">
                         <img class="listIcon" src="./icon/Create.png">

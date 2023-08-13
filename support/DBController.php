@@ -8,7 +8,7 @@ class DBController
     private $host = "localhost";
     private $user="root";
     //private $pass = "";
-    private $database = "sportverbaende";
+    public $database = "sportverbaende";
 
     //phuong thuc khoi tao
     public function __construct()

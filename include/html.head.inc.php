@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="./css/layout.css">
 	<script src="./jquery/html.body.navigation.js"></script>
 	<script src="./jquery/controllerSupport.js"></script>
+	<script src="./jquery/fieldSettings.js"></script>
 	<script type="text/javascript">
 		window.onload = function() {
 			hilightNavItem('<?php echo $navElement; ?>');

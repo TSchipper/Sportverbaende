@@ -1,38 +1,39 @@
 <div class="navigation">
     <ul class="nav flex-column">
-        <li>
-            <form action="home.controller.php" method="post">
-                <button id="navToHome" type="submit" class="btn btn-secondary">
+        <li class="nav-item">
+            <form action="./home.controller.php" method="post">
+                <button ID="navToHome" type="submit" class="navItemUnselected" name="command" value="list">
                     Home
                 </button>
             </form>
         </li>
-        <li>
-            <form action="sportverband.controller.php" method="post">
-                <button id="navToSportverband" type="submit" class="btn btn-secondary" name="command" value="list">
+        <li class="nav-item">
+            <form action="./Sportverband.controller.php" method="post">
+                <button ID="navToSportverband" type="submit" class="navItemUnselected" name="command" value="list">
                     Sportverbände
                 </button>
             </form>
         </li>
-        <li>
-            <form action="liga.controller.php" method="post">
-                <button id="navToLiga" type="submit" class="btn btn-secondary" name="command" value="list">
+        <li class="nav-item">
+            <form action="./liga.controller.php" method="post">
+                <button ID="navToLiga" type="submit" class="navItemUnselected" name="command" value="list">
                     Ligen
                 </button>
             </form>
         </li>
-        <li>
-            <form action="verein.controller.php" method="post">
-                <button id="navToVerein" type="submit" class="btn btn-secondary" name="command" value="list">
+        <li class="nav-item">
+            <form action="./verein.controller.php" method="post">
+                <button ID="navToVerein" type="submit" class="navItemUnselected" name="command" value="list">
                     Vereine [Mockup]
                 </button>
             </form>
         </li>
+        <li class="nav-item">
+            <form action="./administration.controller.php" method="post">
+                <button ID="navToAdministration" type="submit" class="navItemUnselected" name="command" value="list">
+                    Administration
+                </button>
+            </form>
+        </li>
     </ul>
-
-    <form action="sportverband.php" method="post">
-        <button type="submit" class="btn btn-danger" name="command" value="initDatabase">
-            <img class="listIcon" src="./icon/Favorite.png" title="Datenbank zurücksezten">&nbsp;Datenbank zurücksezten
-        </button>
-    </form>
 </div>

@@ -1,6 +1,6 @@
 <?php
-$title = "Sportverbände";
-$navElement = "navToSportverband";
+$title = "Ligen";
+$navElement = "navToLiga";
 include('./include/html.head.inc.php');
 ?>
 
@@ -11,17 +11,17 @@ include('./include/html.head.inc.php');
 include('./include/html.body.navigation.inc.php');
 ?>
         <div class="content">
-            <form action="./Sportverband.controller.php" method="post">
+            <form action="./liga.controller.php" method="post">
                 <div class="card">
                     <div class="card-header">
                         <img class="listIcon" src="./icon/Edit.png" title="Bearbeiten">
-                        Sportverband&nbsp;<span class="objectName">
-                            <?php echo $Sportverband->DisplayName; ?>
+                        Liga&nbsp;<span class="objectName">
+                            <?php echo $liga->DisplayName; ?>
                         </span>&nbsp;bearbeiten
                     </div>
 
                     <div class="card-body">
-                        <?php echo $Sportverband->object2cardBody($dbContext);?>
+                        <?php echo $liga->object2cardBody($dbContext);?>
                     </div>
 
                     <div class="card-footer">
@@ -51,30 +51,6 @@ include('./include/html.body.navigation.inc.php');
                     </div>
                 </div>
             </form>
-            <p></p>
-            <div class="card">
-                <div class="card-header">
-                    Ligen des Sportverbands&nbsp;
-                    <span class="objectName">
-                        <?php echo $Sportverband->ShortCut." - ".$Sportverband->name; ?>
-                    </span>
-                    (Anzahl: [Mockup])
-                </div>
-
-                <div class="card-body">
-                    <?php echo Liga::objects2table(Liga::getObjects($dbContext, "WHERE SportverbandID = ".$Sportverband->id, ""), false); ?>
-                </div>
-
-                <div class="card-footer">
-                    <form action="./ligen_create.php" method="post">
-                        <input type="hidden" name="SportverbandID"
-                            value="<?php echo $ID; ?>" />
-                        <button type="submit" class="btn btn-success">
-                            <img class="listIcon" src="./icon/Create.png" title="Anlegen"> | Anlegen
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
         <?php include('./include/html.body.footer.inc.php');?>
     </div>

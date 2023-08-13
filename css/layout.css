@@ -50,10 +50,20 @@ body {
 }
 
 .navItemSelected {
+  width: 15em;
+  border: 0px;
+  margin: 0.5em;
   font-weight: bold;
+  background-color: darkcyan;
+  opacity: 1;
 }
 .navItemUnselected {
+  width: 15em;
+  border: 0px;
+  margin: 0.5em;
   font-weight: normal;
+  background-color: gray;
+  opacity: 0.6;
 }
 
 .visible {

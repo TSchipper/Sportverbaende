@@ -1,62 +1,62 @@
 /*
 function initDatabase()
 {
-    // get data from the SQL file
-    $query = file_get_contents("../../data/data.sql");
+// get data from the SQL file
+$query = file_get_contents("../../data/data.sql");
 
-    // prepare the SQL statements
-    $stmt = $dbContext->prepare($query);
+// prepare the SQL statements
+$stmt = $dbContext->prepare($query);
 
-    // execute the SQL
-    if ($stmt->execute()) {
-        echo "Success";
-    } else {
-        echo "Fail";
-    }
+// execute the SQL
+if ($stmt->execute()) {
+echo "Success";
+} else {
+echo "Fail";
+}
 }
 
 function chartContent()
 {
-    include('./include/dbContext.pdo.inc.php');
+include('./include/dbContext.pdo.inc.php');
 
-    $chartLabels = "";
-    $charData ="";
+$chartLabels = "";
+$charData ="";
 
-    $sqlCommand = "SELECT Name, NumberOfMembers FROM sportverbaende";
+$sqlCommand = "SELECT Name, NumberOfMembers FROM sportverbaende";
 
-    foreach ($dbContext->query($sqlCommand) as $row) {
-        $chartLabels .=  "'".$row['Name']." (".number_format($row['NumberOfMembers'], 0, '', '.').")', ";
-        $result .=  "'".$row['NumberOfMembers']."',";
+foreach ($dbContext->query($sqlCommand) as $row) {
+$chartLabels .= "'".$row['Name']." (".number_format($row['NumberOfMembers'], 0, '', '.').")', ";
+$result .= "'".$row['NumberOfMembers']."',";
 
-    }
-    $chartLabels = substr($chartLabels, 0, strlen($chartLabels) - 2);
-    $charData = substr($charData, 0, strlen($charData) - 1);
+}
+$chartLabels = substr($chartLabels, 0, strlen($chartLabels) - 2);
+$charData = substr($charData, 0, strlen($charData) - 1);
 
-    return array('chartLabels' => $chartLabels, 'chartData' => $charData);
+return array('chartLabels' => $chartLabels, 'chartData' => $charData);
 }
 
-function loadRecord($id)
+function loadRecord($ID)
 {
-    include('./include/dbContext.pdo.inc.php');
+include('./include/dbContext.pdo.inc.php');
 
 
 
-    $result ="";
-    $sqlCommand         =   "SELECT ShortCut, Name, NumberOfMembers FROM sportverbaende WHERE ID = $id";
-    foreach ($dbContext->query($sqlCommand) as $row) {
+$result ="";
+$sqlCommand = "SELECT ShortCut, Name, NumberOfMembers FROM sportverbaende WHERE ID = $ID";
+foreach ($dbContext->query($sqlCommand) as $row) {
 
-        $shortCut =  $row['ShortCut'];
-        $name =  $row['Name'];
-        $numberOfMembers =  $row['NumberOfMembers'];
+$ShortCut = $row['ShortCut'];
+$Name = $row['Name'];
+$NumberOfMembers = $row['NumberOfMembers'];
 
-        $result = "
-                    <tr>";
+$result = "
+<tr>";
     }
     return $result;
-}
+    }
 
-if (!isset($_POST['command']) and !isset($_GET['id'])) {
+    if (!isset($_POST['command']) and !isset($_GET['id'])) {
     include('./include/dbContext.pdo.inc.php');
     exit();
-}
-*/
+    }
+    */
