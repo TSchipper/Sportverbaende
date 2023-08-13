@@ -1,8 +1,4 @@
-<?php
-$title = "Ligen";
-$navElement = "navToLiga";
-include('./include/html.head.inc.php');
-?>
+<?php include('./include/html.head.inc.php'); ?>
 
 <body>
 	<div class="grid-container">

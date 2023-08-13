@@ -3,16 +3,16 @@
     <div class="overviewContent">
         <div class="card">
             <div class="card-header">
-                Sportverbände:&nbsp;<?php echo Sportverband::listCount($dbContext, "");?>&nbsp;(Anzahl)
+                Sportverbände:&nbsp;<?php echo Sportverband::listCount($dbContext, "Sportverband", "");?>&nbsp;(Anzahl)
             </div>
             <div class="card-body">
-                <?php echo Sportverband::objects2table($fieldSettings, true, Sportverband::getObjects($dbContext, "", $fieldSettings->orderByClause())); ?>
+                <?php echo Sportverband::objects2table($fieldSettings, Sportverband::getObjects($dbContext, "", $fieldSettings->orderByClause()));?>
             </div>
             <div class="card-footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-1">
-                            <a href="./Sportverband.create.php"><img class="listIcon" src="./icon/Create.png"
+                            <a href="./Sportverband.controller.php?ID=-1"><img class="listIcon" src="./icon/Create.png"
                                     title="Anlegen"></a>
                         </div>
                         <div class="container col-10 visible">

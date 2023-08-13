@@ -1,7 +1,7 @@
 <?php
-$title = "Sportverbände";
-$navElement = "navToSportverband";
-$className = "Sportverband";
+$title = "Ligen";
+$navElement = "navToLiga";
+$className = "Liga";
 include('./include/html.head.inc.php');
 ?>
 
@@ -12,11 +12,11 @@ include('./include/html.head.inc.php');
 include('./include/html.body.navigation.inc.php');
 ?>
         <div class="content">
-            <form action="./sportverband.controller.php" method="post">
+            <form action="./liga.controller.php" method="post">
                 <div class="card">
                     <div class="card-header">
                         <img class="listIcon" src="./icon/Create.png">
-                        Sportverband anlegen
+                        Liga anlegen
                     </div>
                     <div class="card-body">
                         <?php echo basic::object2createCardBody($dbContext, $fieldSettings, $className);?>

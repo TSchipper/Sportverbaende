@@ -3,17 +3,16 @@
     <div class="overviewContent">
         <div class="card">
             <div class="card-header">
-                Ligen:&nbsp;<?php echo Liga::listCount($dbContext, "");?>&nbsp;(Anzahl)
+                Ligen:&nbsp;<?php echo Liga::listCount($dbContext, "Liga", "");?>&nbsp;(Anzahl)
             </div>
             <div class="card-body">
-                <?php echo Liga::objects2table($fieldSettings, true, Liga::getObjects($dbContext, "", $fieldSettings->orderByClause())); ?>
+                <?php echo Liga::objects2table($fieldSettings, Liga::getObjects($dbContext, "", $fieldSettings->orderByClause())); ?>
             </div>
-
             <div class="card-footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-1">
-                            <a href="./liga.create.php"><img class="listIcon" src="./icon/Create.png"
+                            <a href="./liga.controller.php?ID=-1"><img class="listIcon" src="./icon/Create.png"
                                     title="Anlegen"></a>
                         </div>
                         <div class="container col-10 visible">

@@ -1,5 +1,5 @@
 <?php
 
-$title = "Verein";
+$title = "Vereine";
 $navElement = "navToVerein";
 include('.//verein.index.php');

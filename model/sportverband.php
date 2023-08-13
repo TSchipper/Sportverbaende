@@ -13,18 +13,12 @@ class Sportverband extends basic
         $this->NumberOfMembers  =       $NumberOfMembers;
     }
 
-
-    public static function listCount($dbContext, $whereClause)
-    {
-        return ($dbContext->numRows("SELECT * FROM sportverbaende ".$whereClause));
-    }
-
     public static function getObjects($dbContext, $whereClause, $orderByClause)
     {
         $resultSet = array();
         $_sportverbaende = array();
-
-        $sqlCommand = "SELECT * FROM Sportverbaende_Presentation".$whereClause." ".$orderByClause;
+        //mnb: abstrahieren auf ClassName
+        $sqlCommand = "SELECT * FROM Sportverband_presentation".$whereClause." ".$orderByClause;
         $resultSet  = $dbContext->runQuery($sqlCommand);
 
         if ($resultSet != null) {
@@ -45,7 +39,8 @@ class Sportverband extends basic
 
     public static function getObjectByID($dbContext, $ID)
     {
-        $sqlCommand = "SELECT * FROM Sportverbaende_Presentation WHERE ID = ".$ID;
+        //mnb: abstrahieren auf ClassName
+        $sqlCommand = "SELECT * FROM Sportverband_presentation WHERE ID = ".$ID;
 
         foreach ($dbContext->runQuery($sqlCommand) as $row) {
             $DisplayName =  $row['DisplayName'];
@@ -60,50 +55,16 @@ class Sportverband extends basic
 
     public static function create($dbContext, $object)
     {
-        //https://www.w3schools.com/php/php_mysql_insert_lastid.asp
-        $sqlCommand       =   "INSERT INTO sportverbaende (ShortCut, Name, NumberOfMembers) VALUES ('".$object->ShortCut."', '".$object->name."', ".$object->NumberOfMembers.")";
+        //mnb: abstrahieren auf ClassName
+        $sqlCommand       =   "INSERT INTO Sportverband (ShortCut, Name, NumberOfMembers) VALUES ('".$object->ShortCut."', '".$object->Name."', ".$object->NumberOfMembers.")";
         return $dbContext->insert($sqlCommand);
     }
 
     public static function update($dbContext, $object)
     {
-        $sqlCommand         =   "UPDATE sportverbaende SET ShortCut = '".$object->ShortCut."', Name = '".$object->name."', NumberOfMembers = ".$object->NumberOfMembers." WHERE ID = ".$object->id;
+        //mnb: abstrahieren auf ClassName
+        $sqlCommand         =   "UPDATE Sportverband SET ShortCut = '".$object->ShortCut."', Name = '".$object->Name."', NumberOfMembers = ".$object->NumberOfMembers." WHERE ID = ".$object->ID;
         $dbContext->execute($sqlCommand);
     }
 
-    public static function delete($dbContext, $ID)
-    {
-        $sqlCommand         =   "DELETE FROM sportverbaende WHERE ID = ".$ID;
-        $dbContext->execute($sqlCommand);
-
-    }
-
-    #-------------------------------------------------------------------------------
-    # html-Visualisierung von Sportverbänden
-    #-------------------------------------------------------------------------------
-    public function object2cardBody($dbContext)
-    {
-        return (
-            "<input type=\"hidden\" name=\"ID\" value=\"".$this->id."\"/>
-        <div class=\"form-group row\">
-            <label class=\"col-sm-2 col-form-label\">Kürzel</label>
-                <div class=\"col-sm-10\">
-                    <input type=\"text\" name=\"ShortCut\" class=\"form-control\" value=\"".$this->ShortCut."\"/>
-                </div>
-        </div>
-        <div class=\"form-group row\">
-            <label class=\"col-sm-2 col-form-label\">Name</label>
-            <div class=\"col-sm-10\">
-                <input type=\"text\" name=\"Name\" class=\"form-control\" value=\"".$this->name."\"/>
-            </div>
-        </div>
-        <div class=\"form-group row\">
-            <label class=\"col-sm-2 col-form-label\">Anzahl Mitglieder</label>
-            <div class=\"col-sm-10\">
-                <input type=\"text\" name=\"NumberOfMembers\" class=\"form-control\" value=\"".$this->NumberOfMembers."\"/>
-            </div>
-        </div>"
-        );
-    }
-    #-------------------------------------------------------------------------------
 }

@@ -8,7 +8,8 @@ class DBController
     private $host = "localhost";
     private $user="root";
     //private $pass = "";
-    public $database = "sportverbaende";
+    public $masterDatabase = "mysql";
+    public $appDatabase = "sportverbaende";
 
     //phuong thuc khoi tao
     public function __construct()
@@ -17,19 +18,59 @@ class DBController
         if(!empty($this->conn)) {//neu da ton tai ket noi
             $this->selectDB();//chon database
         }
+
+        $databaseExisting = false;
+        $resultSet  = $this->runQuery("SHOW DATABASES");
+        if ($resultSet != null) {
+            foreach ($resultSet as $row) {
+                if ($row['Database'] == $this->appDatabase) {
+                    $databaseExisting = true;
+                }
+            }
+            if (!$databaseExisting) {
+                $sqlStatement = 'CREATE DATABASE '.$this->appDatabase;
+                $this->execute($sqlStatement);
+
+            }
+        }
+        mysqli_select_db($this->conn, $this->appDatabase);
+    }
+
+    public function executeSQLScript($filename)
+    {
+        $sqlCommand = file_get_contents($filename);
+        $sqlCommand = str_replace("\t", " ", $sqlCommand);
+        $sqlCommand = str_replace("\n", " ", $sqlCommand);
+        $sqlCommand = str_replace("\r", " ", $sqlCommand);
+        //$sqlCommand = str_replace(";;", ";", $sqlCommand);
+        //$sqlCommand = str_replace(";;", ";", $sqlCommand);
+        //$sqlCommand = str_replace(";;", ";", $sqlCommand);
+        //$sqlCommand = str_replace(";;", ";", $sqlCommand);
+
+        //$pdo = new PDO('mysql:host=localhost;dbname=test', 'username', 'password');;
+        $connectionString = "mysql:host=".$this->host.";dbname=".$this->appDatabase;
+        $pdo = new PDO($connectionString, $this->user, null);
+
+        echo "<b><i>".$sqlCommand."</i></b>";
+        $this->execute($sqlCommand);
+
+        $statement = $pdo->prepare($sqlCommand);
+        $result = $statement->execute();
+
+        return ($result);
     }
 
     //ham ket noi CSDL
     public function connectDB()
     {
-        $conn = mysqli_connect($this->host, $this->user, /*$this->pass*/ null, $this->database);
+        $conn = mysqli_connect($this->host, $this->user, /*$this->pass*/ null, $this->masterDatabase);
         return $conn;
     }
 
     //ham chon DB
     public function selectDB()
     {
-        mysqli_select_db($this->conn, $this->database);
+        mysqli_select_db($this->conn, $this->masterDatabase);
     }
 
     //ham chay cau lenh

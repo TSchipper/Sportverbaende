@@ -7,6 +7,9 @@ function hilightNavItem(navItemSelected) {
   $("#navToVerein")
     .removeClass("navItemSelected")
     .addClass("navItemUnselected");
+  $("#navToAdministration")
+    .removeClass("navItemSelected")
+    .addClass("navItemUnselected");
 
   if (navItemSelected == "navToHome") {
     $("#navToHome")
