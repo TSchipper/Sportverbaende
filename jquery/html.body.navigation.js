@@ -7,9 +7,7 @@ function hilightNavItem(navItemSelected) {
   $("#navToVerein")
     .removeClass("navItemSelected")
     .addClass("navItemUnselected");
-  $("#navToAdministration")
-    .removeClass("navItemSelected")
-    .addClass("navItemUnselected");
+  $("#navToSetup").removeClass("navItemSelected").addClass("navItemUnselected");
 
   if (navItemSelected == "navToHome") {
     $("#navToHome")
@@ -31,8 +29,8 @@ function hilightNavItem(navItemSelected) {
       .removeClass("navItemUnselected")
       .addClass("navItemSelected");
   }
-  if (navItemSelected == "navToAdministration") {
-    $("#navToAdministration")
+  if (navItemSelected == "navToSetup") {
+    $("#navToSetup")
       .removeClass("navItemUnselected")
       .addClass("navItemSelected");
   }

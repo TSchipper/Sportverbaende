@@ -1,7 +1,6 @@
 <?php
 
 //https://github.com/hungnttg/PHP/blob/master/DBController.php
-
 class DBController
 {
     //khai bao thong tin ket noi voi CSDL

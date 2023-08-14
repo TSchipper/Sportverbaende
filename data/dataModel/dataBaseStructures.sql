@@ -1,6 +1,7 @@
-USE					sportverbaende;
-DROP TABLE			IF EXISTS
-					FieldSettings;
+--------------------------------------------------------------------------------;
+-- Feldeinstellungen pro Klasse ------------------------------------------------;
+--------------------------------------------------------------------------------;
+-- Tabelle;
 CREATE TABLE		IF NOT EXISTS
 					FieldSettings (
                     	ID					    INT					NOT NULL	AUTO_INCREMENT
@@ -17,25 +18,11 @@ CREATE TABLE		IF NOT EXISTS
                         , SortRank     	        INT			        NULL
                     	, PRIMARY KEY		    (ID)
                     );
-DROP VIEW		    IF  EXISTS
-                    FieldSettings_NextSortRankPerClassName;
-CREATE VIEW	        FieldSettings_NextSortRankPerClassName          AS
-SELECT              ClassName
-                    , MAX(SortRank) + 1                             AS  NextSortRank 
-FROM                FieldSettings
-GROUP BY            ClassName;
-INSERT INTO         FieldSettings (
-                        ClassName
-                        , ColumnName
-                        , ColumnRank
-                        , DisplayName
-                        , SelectClass
-                        , DataPresentation
-                        , ShowInOverview
-                        , ShowInForm
-                        , SortOrder
-                        , SortRank
-                    )
+
+--	Standardfelder für Klasse Sportverband;
+DROP VIEW			IF EXISTS
+					FieldSettings_Sportverband;
+CREATE VIEW	        FieldSettings_Sportverband				        AS
 SELECT              'Sportverband'   								AS	ClassName
 					, 'ID'											AS	ColumnName
                     , 10                                            AS  ColumnRank
@@ -85,8 +72,13 @@ UNION SELECT  		'Sportverband'   								AS	ClassName
                     , 1												AS	ShowInOverview
                     , 1												AS	ShowInForm
                     , null											AS	SortOrder
-                    , null											AS	SortRank
-UNION SELECT  		 'Liga'           								AS	ClassName
+                    , null											AS	SortRank;
+
+--	Standardfelder für Klasse Liga;
+DROP VIEW			IF EXISTS
+					FieldSettings_Liga;
+CREATE VIEW	        FieldSettings_Liga						        AS
+SELECT              'Liga'           								AS	ClassName
 					, 'ID'											AS	ColumnName
                     , 10                                            AS  ColumnRank
                     , 'Aktion'										AS	DisplayName
@@ -96,7 +88,7 @@ UNION SELECT  		 'Liga'           								AS	ClassName
                     , 0												AS	ShowInForm
                     , null											AS	SortOrder
                     , null											AS	SortRank
-UNION SELECT  		 'Liga'           								AS	ClassName
+UNION SELECT  		'Liga'           								AS	ClassName
 					, 'SportverbandID'								AS	ColumnName
                     , 20                                            AS  ColumnRank
                     , 'Sportverband'								AS	DisplayName
@@ -106,7 +98,7 @@ UNION SELECT  		 'Liga'           								AS	ClassName
                     , 1												AS	ShowInForm
                     , null											AS	SortOrder
                     , null											AS	SortRank
-UNION SELECT  		 'Liga'           								AS	ClassName
+UNION SELECT  		'Liga'           								AS	ClassName
 					, 'Sportverband'								AS	ColumnName
                     , 30                                            AS  ColumnRank
                     , 'Sportverband'		    					AS	DisplayName
@@ -116,7 +108,7 @@ UNION SELECT  		 'Liga'           								AS	ClassName
                     , 0												AS	ShowInForm
                     , null											AS	SortOrder
                     , null											AS	SortRank
-UNION SELECT  		 'Liga'           								AS	ClassName
+UNION SELECT  		'Liga'           								AS	ClassName
 					, 'ShortCut'									AS	ColumnName
                     , 40                                            AS  ColumnRank
                     , 'Kürzel'										AS	DisplayName
@@ -126,7 +118,7 @@ UNION SELECT  		 'Liga'           								AS	ClassName
                     , 1												AS	ShowInForm
                     , null											AS	SortOrder
                     , null											AS	SortRank
-UNION SELECT  		 'Liga'           								AS	ClassName
+UNION SELECT  		'Liga'           								AS	ClassName
 					, 'Name'										AS	ColumnName
                     , 50                                            AS  ColumnRank
                     , 'Name'										AS	DisplayName
@@ -136,3 +128,87 @@ UNION SELECT  		 'Liga'           								AS	ClassName
                     , 1												AS	ShowInForm
                     , null											AS	SortOrder
                     , null											AS	SortRank;
+
+--	Übernahme der Standardfelder für die Klassen Sportverband und Liga;
+INSERT INTO         FieldSettings (
+                        ClassName
+                        , ColumnName
+                        , ColumnRank
+                        , DisplayName
+                        , SelectClass
+                        , DataPresentation
+                        , ShowInOverview
+                        , ShowInForm
+                        , SortOrder
+                        , SortRank
+                    )
+SELECT				*
+FROM				FieldSettings_Sportverband
+WHERE NOT EXISTS	(SELECT * FROM FieldSettings WHERE ClassName = 'Sportverband')
+UNION SELECT		*
+FROM				FieldSettings_Liga
+WHERE NOT EXISTS	(SELECT * FROM FieldSettings WHERE ClassName = 'Liga');
+
+-- Logik zur Ermittlung des nächsten freien Sortierrangs;
+DROP VIEW			IF EXISTS
+					FieldSettings_NextSortRankPerClassName;
+CREATE VIEW	        FieldSettings_NextSortRankPerClassName          AS
+SELECT              ClassName
+                    , MAX(SortRank) + 1                             AS  NextSortRank 
+FROM                FieldSettings
+GROUP BY            ClassName;
+--------------------------------------------------------------------------------;
+
+--------------------------------------------------------------------------------;
+-- Klasse Sportverband ---------------------------------------------------------;
+--------------------------------------------------------------------------------;
+-- Tabelle;
+CREATE TABLE		IF NOT EXISTS
+					Sportverband (
+                    	ID					INT					NOT NULL	AUTO_INCREMENT
+                        , ShortCut			VARCHAR (50)		NOT NULL
+                        , Name				VARCHAR (255)		NOT NULL
+                        , NumberOfMembers	INT					NULL
+                    	, PRIMARY KEY		(ID)
+                    );
+
+-- Darstellung;
+DROP VIEW			IF EXISTS
+					Sportverband_Presentation;
+CREATE VIEW			Sportverband_Presentation									AS
+SELECT				ID
+					, CONCAT (ShortCut, ' - ', Name)							AS	DisplayName
+					, ShortCut
+					, Name
+					, NumberOfMembers
+FROM				Sportverband;
+--------------------------------------------------------------------------------;
+
+--------------------------------------------------------------------------------;
+-- Klasse Liga -----------------------------------------------------------------;
+--------------------------------------------------------------------------------;
+-- Tabelle;
+CREATE TABLE		IF NOT EXISTS
+					Liga (
+                    	ID					INT					NOT NULL	AUTO_INCREMENT
+						, SportverbandID	INT
+                        , ShortCut			VARCHAR (50)		NOT NULL
+                        , Name				VARCHAR (255)		NOT NULL
+                		, PRIMARY KEY		(ID)
+						, FOREIGN KEY		(SportverbandID)	REFERENCES	Sportverband (ID)
+                    );
+
+-- Darstellung;
+DROP VIEW			IF EXISTS
+					Liga_Presentation;
+CREATE VIEW			Liga_Presentation											AS
+SELECT				L.ID
+					, CONCAT (L.ShortCut, ' - ', L.Name)						AS	DisplayName
+					, L.SportverbandID
+					, CONCAT (SV.ShortCut, ' - ', SV.Name)						AS	Sportverband
+					, L.ShortCut
+					, L.Name
+FROM				Liga														AS	L
+LEFT JOIN			Sportverband												AS	SV
+ON					L.SportverbandID	=		SV.ID;
+--------------------------------------------------------------------------------;

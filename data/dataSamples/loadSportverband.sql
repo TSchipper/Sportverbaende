@@ -1,27 +1,3 @@
-USE					Sportverbaende;
-DROP TABLE			IF EXISTS
-					Liga;
-DROP TABLE			IF EXISTS
-					Sportverband;
-
-CREATE TABLE		IF NOT EXISTS
-					Sportverband (
-                    	ID					INT					NOT NULL	AUTO_INCREMENT
-                        , ShortCut			VARCHAR (50)		NOT NULL
-                        , Name				VARCHAR (255)		NOT NULL
-                        , NumberOfMembers	INT					NULL
-                    	, PRIMARY KEY		(ID)
-                    );
-
-DROP VIEW			IF EXISTS
-					Sportverband_Presentation;
-CREATE VIEW			Sportverband_Presentation									AS
-SELECT				ID
-					, CONCAT (ShortCut, ' - ', Name)							AS	DisplayName
-					, ShortCut
-					, Name
-					, NumberOfMembers
-FROM				Sportverband;
 
 INSERT INTO			Sportverband (
 						ShortCut

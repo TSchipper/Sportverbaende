@@ -29,9 +29,9 @@
             </form>
         </li>
         <li class="nav-item">
-            <form action="./administration.controller.php" method="post">
-                <button ID="navToAdministration" type="submit" class="navItemUnselected" name="command" value="list">
-                    Administration
+            <form action="./setup.controller.php" method="post">
+                <button ID="navToSetup" type="submit" class="navItemUnselected" name="command" value="list">
+                    Setup
                 </button>
             </form>
         </li>
