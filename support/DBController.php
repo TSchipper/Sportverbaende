@@ -27,6 +27,7 @@ class DBController
                 }
             }
             if (!$databaseExisting) {
+
                 $sqlStatement = 'CREATE DATABASE '.$this->appDatabase;
                 $this->execute($sqlStatement);
 

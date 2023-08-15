@@ -4,7 +4,9 @@
 # Einbindung der benötigten  Modelle
 #-------------------------------------------------------------------------------
 include("./model/basic.php");
-include("./support/exeuteSqlScript.php");
+include("./support/DBContext.php");
+$dbContext = new DBContext();
+
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -13,43 +15,44 @@ include("./support/exeuteSqlScript.php");
 
 $title = "Setup";
 $navElement = "navToSetup";
+
 include('.//setup.index.php');
 
-function loadSportverband()
+function loadSportverband($dbContext)
 {
-    exeuteSqlScript("./data/dataSamples/loadSportverband.sql");
+    $dbContext->exeuteSqlScript("./data/dataSamples/loadSportverband.sql");
 }
 
-function resetSportverband()
+function resetSportverband($dbContext)
 {
-    exeuteSqlScript("./data/dataSamples/resetSportverband.sql");
-    exeuteSqlScript("./data/dataModel/dataBaseStructures.sql");
+    $dbContext->exeuteSqlScript("./data/dataSamples/resetSportverband.sql");
+    $dbContext->exeuteSqlScript("./data/dataModel/dataBaseStructures.sql");
 }
 
-function loadLiga()
+function loadLiga($dbContext)
 {
-    exeuteSqlScript("./data/dataSamples/loadLiga.sql");
+    $dbContext->exeuteSqlScript("./data/dataSamples/loadLiga.sql");
 }
 
-function resetLiga()
+function resetLiga($dbContext)
 {
-    exeuteSqlScript("./data/dataSamples/resetLiga.sql");
+    $dbContext->exeuteSqlScript("./data/dataSamples/resetLiga.sql");
 }
 
 if (isset($_POST['command'])) {
     switch ($_POST['command']) {
         case 'loadSportverband':
-            loadSportverband();
+            loadSportverband($dbContext);
             break;
         case 'resetSportverband':
-            resetSportverband();
+            resetSportverband($dbContext);
 
             break;
         case 'loadLiga':
-            loadLiga();
+            loadLiga($dbContext);
             break;
         case 'resetLiga':
-            resetLiga();
+            resetLiga($dbContext);
             break;
     }
 }

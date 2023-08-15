@@ -62,15 +62,10 @@ echo FormBuilder::buildForm(
     ,
     null //$stdCommand
 );
+
 include('./include/html.body.footer.inc.php');
 ?>
-        ?>
     </div>
 </body>
-
-
-
-
-
 
 </html>
