@@ -20,23 +20,23 @@ include('.//setup.index.php');
 
 function loadSportverband($dbContext)
 {
-    $dbContext->exeuteSqlScript("./data/dataSamples/loadSportverband.sql");
+    $dbContext->exeuteSqlScriptFile("./data/dataSamples/loadSportverband.sql");
 }
 
 function resetSportverband($dbContext)
 {
-    $dbContext->exeuteSqlScript("./data/dataSamples/resetSportverband.sql");
-    $dbContext->exeuteSqlScript("./data/dataModel/dataBaseStructures.sql");
+    $dbContext->exeuteSqlScriptFile("./data/dataSamples/resetSportverband.sql");
+    $dbContext->exeuteSqlScriptFile("./data/dataModel/dataBaseStructures.sql");
 }
 
 function loadLiga($dbContext)
 {
-    $dbContext->exeuteSqlScript("./data/dataSamples/loadLiga.sql");
+    $dbContext->exeuteSqlScriptFile("./data/dataSamples/loadLiga.sql");
 }
 
 function resetLiga($dbContext)
 {
-    $dbContext->exeuteSqlScript("./data/dataSamples/resetLiga.sql");
+    $dbContext->exeuteSqlScriptFile("./data/dataSamples/resetLiga.sql");
 }
 
 if (isset($_POST['command'])) {

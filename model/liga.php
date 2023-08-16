@@ -22,7 +22,7 @@ class Liga extends basic
         $_ligen = array();
         //mnb: abstrahieren auf ClassName
         $sqlCommand = "SELECT * FROM Liga_presentation ".$whereClause." ".$orderByClause;
-        $resultSet  = $dbContext->runQuery($sqlCommand);
+        $resultSet  = $dbContext->returnRecordset($sqlCommand);
 
         if ($resultSet != null) {
             foreach ($resultSet as $row) {
@@ -46,15 +46,14 @@ class Liga extends basic
         //mnb: abstrahieren auf ClassName
         $sqlCommand = "SELECT * FROM Liga_presentation WHERE ID = ".$ID;
 
-        foreach ($dbContext->runQuery($sqlCommand) as $row) {
-            $DisplayName =  $row['DisplayName'];
-            $sportverbandID =  $row['SportverbandID'];
-            $Sportverband =  $row['Sportverband'];
-            $ShortCut =  $row['ShortCut'];
-            $Name =  $row['Name'];
+        foreach ($dbContext->returnRecordset($sqlCommand) as $row) {
+            $DisplayName        =  $row['DisplayName'];
+            $sportverbandID     =  $row['SportverbandID'];
+            $Sportverband       =  $row['Sportverband'];
+            $ShortCut           =  $row['ShortCut'];
+            $Name               =  $row['Name'];
 
-            $_liga = new Liga($ID, $DisplayName, $sportverbandID, $Sportverband, $ShortCut, $Name);
-
+            $_liga              = new Liga($ID, $DisplayName, $sportverbandID, $Sportverband, $ShortCut, $Name);
         }
         return $_liga;
     }
@@ -64,7 +63,7 @@ class Liga extends basic
         //mnb: abstrahieren auf ClassName
         $sqlCommand       =   "INSERT INTO Liga (SportverbandID, ShortCut, Name) VALUES (".$object->SportverbandID.", '".$object->ShortCut."', '".$object->Name."')";
         echo $sqlCommand;
-        return $dbContext->insert($sqlCommand);
+        return $dbContext->createRecord($sqlCommand);
     }
 
     public static function update($dbContext, $object)
@@ -72,7 +71,7 @@ class Liga extends basic
         //mnb: abstrahieren auf ClassName
 
         $sqlCommand         =   "UPDATE Liga SET SportverbandID = ".$object->SportverbandID.", ShortCut = '".$object->ShortCut."', Name = '".$object->Name."' WHERE ID = ".$object->ID;
-        $dbContext->execute($sqlCommand);
+        $dbContext->updateRecord($sqlCommand);
     }
 
 }

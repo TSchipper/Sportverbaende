@@ -31,7 +31,7 @@ class FieldSetting
     {
         $sqlCommand = "SELECT NextSortRank FROM FieldSettings_NextSortRankPerClassName WHERE ClassName = '".$className."'";
         //echo $sqlCommand."<br>";
-        $nextSortRank   = $dbContext->runQuery($sqlCommand)[0]['NextSortRank'];
+        $nextSortRank   = $dbContext->returnRecordset($sqlCommand, null, null)[0]['NextSortRank'];
         if ($nextSortRank == null) {
             $nextSortRank = 1;
         }
@@ -41,7 +41,7 @@ class FieldSetting
                         SET         SortOrder = CASE WHEN (ISNULL (SortOrder) or (SortOrder = 'Desc')) THEN 'Asc' ELSE 'Desc' END
                                     , SortRank = CASE WHEN ISNULL (SortRank) THEN ".$nextSortRank." ELSE SortRank END
                         WHERE       ClassName = '".$this->_className."' AND ColumnName = '".$this->_columnName."'";
-        return $dbContext->execute($sqlCommand);
+        return $dbContext->updateRecord($sqlCommand);
     }
 
     public function removeSortOrder($dbContext)
@@ -50,7 +50,7 @@ class FieldSetting
                         SET         SortOrder = CASE WHEN ColumnName = '".$this->_columnName."' THEN null ELSE SortOrder END
                                     , SortRank = CASE WHEN SortRank = ".$this->_sortRank." THEN NULL ELSE SortRank - 1 END
                         WHERE       ClassName = '".$this->_className."' AND SortRank >= ".$this->_sortRank;
-        return $dbContext->execute($sqlCommand);
+        return $dbContext->updateRecord($sqlCommand);
     }
 }
 
@@ -61,7 +61,7 @@ class FieldSettings
     public function __construct($dbContext, $className)
     {
         $sqlCommand = "SELECT * FROM FieldSettings WHERE ClassName = '".$className."' ORDER BY ColumnRank";
-        $resultSet  = $dbContext->runQuery($sqlCommand);
+        $resultSet  = $dbContext->returnRecordset($sqlCommand);
 
         if ($resultSet != null) {
             foreach ($resultSet as $row) {
@@ -92,7 +92,7 @@ class FieldSettings
     {
 
         $sqlCommand = "SELECT * FROM FieldSettings WHERE ClassName = '".$className."' AND ColumnName =  '".$columnName."'";
-        $resultSet  = $dbContext->runQuery($sqlCommand);
+        $resultSet  = $dbContext->returnRecordset($sqlCommand);
 
         if ($resultSet != null) {
             $className          = $resultSet[0]['ClassName'];

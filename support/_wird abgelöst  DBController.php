@@ -19,7 +19,7 @@ class DBController
         }
 
         $databaseExisting = false;
-        $resultSet  = $this->runQuery("SHOW DATABASES");
+        $resultSet  = $this->returnRecordset("SHOW DATABASES");
         if ($resultSet != null) {
             foreach ($resultSet as $row) {
                 if ($row['Database'] == $this->appDatabase) {
@@ -74,7 +74,7 @@ class DBController
     }
 
     //ham chay cau lenh
-    public function runQuery($query)
+    public function returnRecordset($query)
     {
         $result = mysqli_query($this->conn, $query);
         //doc ket qua bang vong lap

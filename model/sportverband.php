@@ -19,7 +19,7 @@ class Sportverband extends basic
         $_sportverbaende = array();
         //mnb: abstrahieren auf ClassName
         $sqlCommand = "SELECT * FROM Sportverband_presentation".$whereClause." ".$orderByClause;
-        $resultSet  = $dbContext->runQuery($sqlCommand);
+        $resultSet  = $dbContext->returnRecordset($sqlCommand);
 
         if ($resultSet != null) {
             foreach ($resultSet as $row) {
@@ -42,7 +42,7 @@ class Sportverband extends basic
         //mnb: abstrahieren auf ClassName
         $sqlCommand = "SELECT * FROM Sportverband_presentation WHERE ID = ".$ID;
 
-        foreach ($dbContext->runQuery($sqlCommand) as $row) {
+        foreach ($dbContext->returnRecordset($sqlCommand) as $row) {
             $DisplayName =  $row['DisplayName'];
             $ShortCut =  $row['ShortCut'];
             $Name =  $row['Name'];
@@ -57,14 +57,13 @@ class Sportverband extends basic
     {
         //mnb: abstrahieren auf ClassName
         $sqlCommand       =   "INSERT INTO Sportverband (ShortCut, Name, NumberOfMembers) VALUES ('".$object->ShortCut."', '".$object->Name."', ".$object->NumberOfMembers.")";
-        return $dbContext->insert($sqlCommand);
+        return $dbContext->createRecord($sqlCommand);
     }
 
     public static function update($dbContext, $object)
     {
         //mnb: abstrahieren auf ClassName
         $sqlCommand         =   "UPDATE Sportverband SET ShortCut = '".$object->ShortCut."', Name = '".$object->Name."', NumberOfMembers = ".$object->NumberOfMembers." WHERE ID = ".$object->ID;
-        $dbContext->execute($sqlCommand);
+        $dbContext->updateRecord($sqlCommand);
     }
-
 }

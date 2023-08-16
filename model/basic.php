@@ -228,8 +228,7 @@ class basic
 
     public static function listCount($dbContext, $className, $whereClause)
     {
-        //echo "SELECT * FROM ".$className." ".$whereClause;
-        return $dbContext->numRows("SELECT * FROM ".$className." ".$whereClause);
+        return $dbContext->listCount("SELECT COUNT(*) FROM ".$className." ".$whereClause);
     }
 
     public static function delete($dbContext, $object)

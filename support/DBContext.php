@@ -31,7 +31,7 @@ class DBContext
         $this->pdo = null;
         $hostDatabase       = 'mysql:host='.$this->host.';dbname='.$this->appDatabase.'';
 
-        $this->pdo = new PDO($this->hostDatabase, $this->user, $this->password);
+        $this->pdo = new PDO($hostDatabase, $this->user, $this->password);
 
     }
     private function disconnectDatabase()
@@ -73,7 +73,7 @@ class DBContext
 
     private function createDataBaseStructures()
     {
-        $this->exeuteSqlScript("./data/dataModel/createDataBaseStructures.sql");
+        $this->exeuteSqlScriptFile("./data/dataModel/createDataBaseStructures.sql");
     }
 
     public function __construct()
@@ -102,7 +102,6 @@ class DBContext
         $this->appDatabase        = "sportverbaende";
         $this->user               = "root";
         $this->password           = null;
-
 
         if (!$this->appDatabaseExisting()) {
             $this->createAppDatabase();
@@ -133,7 +132,18 @@ class DBContext
         $this->disconnectDatabase();
     }
 
-    private function createRecord($sqlCommand)
+    public function listCount($sqlCommand)
+    {
+        $this->connectToAppDatabase();
+
+        $result = $this->pdo->query($sqlCommand);
+        $count = $result->fetchColumn();
+
+        $this->disconnectDatabase();
+        return $count;
+    }
+
+    public function createRecord($sqlCommand)
     {
         $this->connectToAppDatabase();
 
@@ -144,7 +154,7 @@ class DBContext
         return $newID;
     }
 
-    private function updateRecord($sqlCommand)
+    public function updateRecord($sqlCommand)
     {
         $this->connectToAppDatabase();
         $statement      =   $this->pdo->prepare($sqlCommand);
@@ -152,7 +162,7 @@ class DBContext
         $this->disconnectDatabase();
     }
 
-    private function deleteRecord($sqlCommand)
+    public function deleteRecord($sqlCommand)
     {
         $this->connectToAppDatabase();
         $statement      =   $this->pdo->prepare($sqlCommand);
@@ -160,7 +170,19 @@ class DBContext
         $this->disconnectDatabase();
     }
 
-    private function returnRecordset($sqlCommand, $pageSize, $pageNumber)
+    public function returnRecordset($sqlCommand)
+    {
+        $this->connectToAppDatabase();
+
+        $statement      =   $this->pdo->prepare($sqlCommand);
+        $statement->execute();
+        $result         =   $statement->fetchAll();
+
+        $this->disconnectDatabase();
+        return $result;
+    }
+
+    public function returnRecordsetPaged($sqlCommand, $pageSize, $pageNumber)
     {
         $this->connectToAppDatabase();
         if (isset($pageSize)) {

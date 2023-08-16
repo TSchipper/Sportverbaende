@@ -12,8 +12,8 @@ include("./model/liga.php");
 #-------------------------------------------------------------------------------
 # Einbindung und Initialisierung DB-Connector
 #-------------------------------------------------------------------------------
-include("./support/DBController.php");
-$dbContext = new DBController();
+include("./support/DBContext.php");
+$dbContext = new DBContext();
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -42,13 +42,13 @@ if  (
 # Anlager und Anzeige einer Liga per ID als Get-Parameter
 elseif (isset($_GET['ID'])) {
 
-$ID = $_GET['ID'];
-if ($ID == -1) {
-    include("./Liga.create.php");
-} else {
-    $object = Liga::getObjectByID($dbContext, $ID);
-    include("./Liga.edit.php");
-}
+    $ID = $_GET['ID'];
+    if ($ID == -1) {
+        include("./Liga.create.php");
+    } else {
+        $object = Liga::getObjectByID($dbContext, $ID);
+        include("./Liga.edit.php");
+    }
 
 }
 
