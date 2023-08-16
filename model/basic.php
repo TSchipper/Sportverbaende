@@ -169,7 +169,9 @@ class basic
                     $formGroup  =   "<div class=\"form-group row\">
                                             <label class=\"col-sm-2 col-form-label\">".$fieldSetting->_displayName."</label>
                                             <div class=\"col-sm-10\">";
-                    if (isset($fieldSetting->_selectClass)) {
+                    if ($field->_dataPresentation == "Integer") {
+                        $formGroup  .=          "<input type=\"number\" name=\"".$fieldSetting->_columnName."\" class=\"form-control\" value=\"\"/>";
+                    } elseif (isset($fieldSetting->_selectClass)) {
                         $formGroup  .=          self::dropdownContent(
                             $dbContext,                     //$dbContext
                             $fieldSetting->_selectClass,    //$tableName,
